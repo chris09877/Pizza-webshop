@@ -1,4 +1,6 @@
 require('dotenv').config();
+
+
 const express = require("express");
 const mongoose = require('mongoose');
 const app = express();
@@ -14,4 +16,13 @@ mongoose.connect(process.env.MONGO_KEY, {
   console.log('Connected to MongoDB');
   app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
 }).catch((err) => console.log (`${err} did not connect`));
+
+const UserModel = require('../models/Users')
+
+
+// app.get('/users', (req,res) => {
+//         UserModel.find()
+//           .then(users=>res.json(users))
+//           .catch(err=> res.json(err))
+// })
 
