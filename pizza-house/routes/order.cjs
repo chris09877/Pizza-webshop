@@ -21,5 +21,9 @@ router.patch("/update/:id", updateOrder);
 
 router.delete("/delete/:id", deleteOrder);
 
+/* CREATE */
+
+router.post("/create", createOrder);
+
 
 module.exports = router;

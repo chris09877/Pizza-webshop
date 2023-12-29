@@ -4,12 +4,25 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import ToggleInputButton from './components/ToggleInputButton';
 import SubmitBtn from './components/SubmitBtn';
+import Cookies from "js-cookie";
 
 export default function Pizzas() {
     const [pizzas, setPizzas] = useState([]);
     const [showBtn, setShowBtn] = useState(true)
     const handleOrderClick = async ()  => {
         setShowBtn(!showBtn); // Toggles the showBtn state when the button is clicked
+        try {
+            console.log(`${config.apiUrl}}/orders/create`);
+            const response = await axios.post(`${config.apiUrl}/orders/create`);
+            const data = response.data;
+            Cookies.set('userId', data.user, { expires: 7}, { path: '/' }, { domain: 'example"http://localhost:5173' } );
+            let userId = Cookies.get('userId');
+            console.log(userId);
+            console.log(data._id);
+
+        } catch (error) {
+            console.log(error);
+        }
     };
     useEffect(() => {
         const fetchPizzas = async () => {

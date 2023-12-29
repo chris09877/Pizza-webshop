@@ -1,10 +1,41 @@
 const mongoose = require('mongoose');
-
+const {PizzaMOdel} = require('./Pizzas');
 const OrdersSchema = new mongoose.Schema({
-    id: Object,
-    email: String,
-    password: String,
-    username: String
+    id: mongoose.Schema.Types.ObjectId,
+    user: {
+        type: String,
+        required: true,
+      },
+      total_price: {
+        type: Number,
+        required: false,
+        default:null,
+      },
+      order_date: {
+        type: Date,
+        required: false,
+        default:null,
+      },
+      phone: {
+        type: String,
+        required: false,
+        default:null,
+      },
+      address: {
+        type: String,
+        required: false,
+        default:null,
+      },
+      status: {
+        type: String,
+        enum: ['pending', 'confirmed', 'delivered'], // Add more statuses as needed
+        default: 'pending',
+      },
+      pizzas: {
+        type: Array, // Array of pizzas following the pizzaSchema
+        required: false,
+        default:null,
+      },
 });
 
 const OrdersModel = mongoose.model("orders", OrdersSchema);

@@ -1,5 +1,50 @@
 const { Orders } = require("../models/Models.js");
+const Cookies = require('js-cookie');
 
+
+
+const generateRandomId = () => {
+    return Math.random().toString(36).substr(2, 9); // Generate a random alphanumeric string
+  };
+
+  const cookieUserId = () => {
+    let userId = Cookies.get('userId');
+    if (!userId) {
+      userId = generateRandomId();
+      Cookies.set('userId', userId,{ maxAge:  3600000 , httpOnly: true });
+      return userId;
+    }
+    else{
+     return userId;
+    }
+ };
+
+
+ const createOrder = async (req, res) => {
+    try {
+      let userId = cookieUserId();
+      
+  
+      // Construct the Order object
+      const newOrder = new Orders({
+        order_date: null,
+        phone: null,
+        address: null,
+        status: null,
+        pizzas: null,
+        total_price:null,
+        user:userId,
+      });
+  
+      await newOrder.save();
+      res.status(201).json(newOrder);
+    } catch (err) {
+      res.status(409).json({ message: err.message });
+    }
+  };
+
+
+ 
 const updateOrder = async (req, res) => {
     try {
         const updatedOrder = await Orders.findByIdAndUpdate(req.params.id, req.body, {
@@ -17,16 +62,6 @@ const updateOrder = async (req, res) => {
     }
 };
 
-
-const createOrder = async (req, res) => {
-    try {
-        const newOrder = new Orders(req.body);
-        await newOrder.save();
-        res.status(201).json(newOrder);
-    } catch (err) {
-        res.status(409).json({ message: err.message });
-    }
-};
 
 const deleteOrder = async (req, res) => {
     try {
