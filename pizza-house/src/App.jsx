@@ -3,11 +3,12 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Pizzas from './Pizzas';
-import Cart from './Cart';
-import AdminPanel from './AdminPanel';
-import Login from './Login';
-import PizzaShow from './PizzaShow';
+
+import {Pizzas} from './Pizzas';
+import {Cart} from './Cart';
+import {AdminPanel} from './AdminPanel';
+import {Login} from './Login';
+import {PizzaShow} from './PizzaShow';
 function App() {
 
   return (
@@ -28,4 +29,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

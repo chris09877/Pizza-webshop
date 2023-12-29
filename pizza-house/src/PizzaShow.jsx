@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import config from "../config";
+import {config} from "../config.js";
 import axios from 'axios';
 
 const PizzaDetails = () => {
-    const { id } = useParams();
-    const [pizza, setPizza] = useState(null);
+    const [pizza, setPizza] = useState({});
+    const { id } = useParams(); 
+    console.log(id);
 
     useEffect(() => {
         const fetchPizza = async () => {
-            console.log(config.apiUrl);
-
             try {
                 const response = await axios.get(`${config.apiUrl}/pizzas/${id}`);
-                console.log(config.apiUrl);
                 const data = response.data;
-                console.log(data);
                 setPizza(data);
             } catch (error) {
                 console.log(error);
@@ -24,7 +21,6 @@ const PizzaDetails = () => {
 
         fetchPizza();
     }, [id]);
-
     return (
         <div>
             <h1>Pizza Details</h1>

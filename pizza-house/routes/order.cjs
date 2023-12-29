@@ -9,15 +9,19 @@ console.log("route order ok");
 
 /* READ */
 router.get("/", getOrders);
-router.get("/:id", getOrderById);
+router.get("order/:id", getOrderById);
 
 /* UPDATE */
 
-router.patch("/update/:id", updateOrder);
+router.patch("order/update/:id", updateOrder);
 
 /* DELETE */
 
-router.delete("/delete/:id", deleteOrder);
+router.delete("order/delete/:id", deleteOrder);
+
+/* CREATE   */
+router.post("order/create", createOrder);
+
 
 
 module.exports = router;

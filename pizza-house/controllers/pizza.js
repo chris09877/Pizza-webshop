@@ -1,5 +1,6 @@
 const { Pizzas } = require("../models/Models.js");
 const { PizzasModel } = require("../models/Pizzas.js");
+const mongoose = require('mongoose');
 
 const getPizzas = async (req, res) => {
     console.log("trygetpizzas");
@@ -16,8 +17,11 @@ const getPizzas = async (req, res) => {
 const getPizzasById = async (req, res) => {
     console.log("test");
     try {
-        const pizzasData = await PizzasModel.findById(req.params.id);
+        const pizzaId = mongoose.Types.ObjectId(req.params.id); // Convert string ID to ObjectId
+        const pizzasData = await PizzasModel.findById(pizzaId);
         console.log(req.params.id);
+        console.log(pizzaId);
+
         if (!pizzasData) {
             return res.status(404).json({ message: "Pizza not found" });
         }
