@@ -4,4 +4,4 @@ const SubmitBtn = ({ type, className, placeholder }) => {
   return <input type={type} className={className} placeholder={placeholder} />;
 };
 
-export default CustomInput;
+export default SubmitBtn;
