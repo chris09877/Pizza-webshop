@@ -5,17 +5,17 @@ const {deletePizzas, getPizzas, getPizzasById} = require('../controllers/pizza.j
 // const { verifyToken } = require("../middleware/auth.js");
 
 const router = express.Router();
-
+//oco endpoints rien a voir avec url browser c'est the uri
 /* READ */
 console.log("route pizza ok");
 
 router.get("/", getPizzas);
 console.log("object");
-router.get("/:id", getPizzasById);
+router.get("/pizzas/:id", getPizzasById);
 
 
 /* DELETE */
 
-router.delete("/delete/:id", deletePizzas);
+router.delete("pizzas/delete/:id", deletePizzas);
 
 module.exports = router;

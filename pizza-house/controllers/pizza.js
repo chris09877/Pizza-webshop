@@ -14,8 +14,10 @@ const getPizzas = async (req, res) => {
 };
 
 const getPizzasById = async (req, res) => {
+    console.log("test");
     try {
-        const pizzasData = await Pizzas.findById(req.params.id);
+        const pizzasData = await PizzasModel.findById(req.params.id);
+        console.log(req.params.id);
         if (!pizzasData) {
             return res.status(404).json({ message: "Pizza not found" });
         }
@@ -27,7 +29,8 @@ const getPizzasById = async (req, res) => {
 
 const deletePizzas = async (req, res) => {
     try {
-        const pizzasData = await Pizzas.findByIdAndDelete(req.params.id);
+        const pizzasData = await PizzasModel.findByIdAndDelete(req.params.id);
+        console.log(req.params.id);
         if (!pizzasData) {
             return res.status(404).json({ message: "Pizza not found" });
         }
