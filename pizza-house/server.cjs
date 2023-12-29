@@ -3,9 +3,17 @@ require('dotenv').config();
 
 const express = require("express");
 const mongoose = require('mongoose');
-const cors = require('cors');
+const cors = require('cors'); //for request to db  to send request to db
 const app = express();
+const session = require('express-session'); //for session
+const secretKey = process.env.SESSION_SECRET;//secret key for sessions
 
+app.use(session({
+  secret: secretKey, // Secret used to sign the session ID cookie
+  resave: false,//
+  saveUninitialized: false,
+  // Other configurations like cookie settings, store, etc.
+}));
 
 //cors middleware
 app.use(cors({
@@ -28,6 +36,10 @@ app.use('/orders', OrdersRoutes);
 app.use('/carts', OrderDetailsRoutes);
 
 
+// Generate a 32-byte (256-bit) random string for session key
+// const crypto = require('crypto');
+// const secretKey = crypto.randomBytes(32).toString('hex'); 
+// console.log(secretKey);
 
 const PORT = process.env.PORT || 3001;
 //connection to mongoDB
@@ -36,8 +48,7 @@ mongoose.connect(process.env.MONGO_KEY, {
 }).then(() => {
   const connectedDb = mongoose.connection.name;
 console.log(`DB NAME: ${connectedDb}`);
-
+//
   console.log('Connected to MongoDB');
   app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
 }).catch((err) => console.log (`${err} did not connect`));
-
