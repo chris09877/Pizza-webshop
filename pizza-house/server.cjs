@@ -29,8 +29,6 @@ app.use('/carts', OrderDetailsRoutes);
 
 
 
-;
-
 const PORT = process.env.PORT || 3001;
 //connection to mongoDB
 mongoose.connect(process.env.MONGO_KEY, {

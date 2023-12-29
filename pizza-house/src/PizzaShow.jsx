@@ -12,13 +12,15 @@ const PizzaDetails = () => {
             console.log(config.apiUrl);
 
             try {
+                console.log("dans le try the pizza show");
                 const response = await axios.get(`${config.apiUrl}/pizzas/${id}`);
                 console.log(config.apiUrl);
                 const data = response.data;
                 console.log(data);
                 setPizza(data);
             } catch (error) {
-                console.log(error);
+                console.log(`${id}
+                ${error}`);
             }
         };
 
