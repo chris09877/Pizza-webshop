@@ -119,14 +119,56 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     try {
-        const ordersData = await Orders.findById(req.params.id);
+        const userId = req.params.id; // Extract the user ID from req.params
+        console.log(`Searching for user with ID: ${userId}`);
+      
+        const ordersData = await Orders.findOne({ user: userId });
+      
         if (!ordersData) {
-            return res.status(404).json({ message: "User not found" });
+          console.log(`User with ID ${userId} not found in the database.`);
+          return res.status(404).json({ message: "User not found" });
         }
+      
+        console.log(`User with ID ${userId} found:`);
+        console.log(ordersData);
+      
         res.status(200).json(ordersData);
-    } catch (err) {
+      } catch (err) {
+        console.error("Error:", err);
         res.status(500).json({ message: err.message });
-    }
+      }
+      
+    // try {
+    //     const ordersData = await Orders.findOne({ user: req.params.id });
+    //     if (!ordersData) {
+    //         return res.status(404).json({ message: "User not found" });
+    //     }
+    //     res.status(200).json(ordersData);
+    // } catch (err) {
+    //     res.status(500).json({ message: err.message });
+    // }
+
+//     try {
+//         const ordersData = await Orders.findById(req.params.id);
+//         if (!ordersData) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+//         res.status(200).json(ordersData);
+//     } catch (err) {
+//         res.status(500).json({ message: err.message });
+//     }
+
+//     try {
+//         const pizzaId = new mongoose.Types.ObjectId(req.params.id); // Convert string ID to ObjectId
+//        const pizzasData = await PizzasModel.findById(pizzaId);
+//        console.log(req.params.id);
+//        if (!pizzasData) {
+//         return res.status(404).json({ message: "User not found" });
+//     }
+//        res.status(200).json(pizzasData);
+//    } catch (err) {
+//        res.status(500).json({ message: err.message });
+//    }
 };
 
 module.exports = {

@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import ToggleInputButton from './components/ToggleInputButton';
 import SubmitBtn from './components/SubmitBtn';
 import Cookies from "js-cookie";
-// import { patch } from "../routes/order.js";
+import OrderDetails from './components/OrderDetails';
 
 export default function Pizzas() {
     const [pizzas, setPizzas] = useState([]);
     const [showBtn, setShowBtn] = useState(true);
     const [userId, setUserId] = useState([]);
+    const [orderDetails, setOrderDetails] = useState([]);
+
     // let userId;
     const handleOrderClick = async ()  => {
         setShowBtn(!showBtn); // Toggles the showBtn state when the button is clicked
@@ -22,7 +24,7 @@ export default function Pizzas() {
             console.log(`user id: ${userId}`);
             console.log(`data id: ${data._id}`);
             console.log(`user id from data: ${data.user}`);
-
+            localStorage.setItem('userId', data.user);
         } catch (error) {
             console.log(error);
         }
@@ -40,13 +42,20 @@ export default function Pizzas() {
         data['user']=userId;
         console.log(`data in handlesubmit: ${data}`);
         try {
-            console.log(`${config.apiUrl}/orders/update/${userId}`);
+        console.log(`${config.apiUrl}/orders/update/${userId}`);
           const response = await axios.patch(`${config.apiUrl}/orders/update/${userId}`, data);
-          console.log(response.data); // Handle the response here (success message or other actions)
+          
+          //console.log(response.data); // Handle the response here (success message or other actions)
+          
+        //   setOrderDetails(await response.data);
+        //   console.log(` data send to component: ${orderDetails}`);
+          
+          
         } catch (error) {
           console.error('Error:', error); // Handle errors here
         }
       };
+
 
     useEffect(() => {
         const fetchPizzas = async () => {
@@ -75,6 +84,15 @@ export default function Pizzas() {
              <div>
                 <button onClick={handleOrderClick}>ORDER</button>
              </div>
+             <div>
+      <OrderDetails
+
+        title="Your Order"
+        
+      />
+      {/* Other components */}
+      {/* ... */}
+    </div>
             <h1>Pizzas</h1>
             {Array.isArray(pizzas) &&
                 pizzas.map((pizza) => (
