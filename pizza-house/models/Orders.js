@@ -9,7 +9,7 @@ const OrdersSchema = new mongoose.Schema({
       total_price: {
         type: Number,
         required: false,
-        default:null,
+        default:0,
       },
       order_date: {
         type: Date,
@@ -34,7 +34,7 @@ const OrdersSchema = new mongoose.Schema({
       pizzas: {
         type: Array, // Array of pizzas following the pizzaSchema
         required: false,
-        default:null,
+        default:[],
       },
 });
 

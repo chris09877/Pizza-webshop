@@ -5,51 +5,58 @@ const Cookies = require('js-cookie');
 
 const generateRandomId = () => {
     return Math.random().toString(36).substr(2, 9); // Generate a random alphanumeric string
-  };
+};
 
-  const cookieUserId = () => {
+const cookieUserId = () => {
     let userId = Cookies.get('userId');
     if (!userId) {
-      userId = generateRandomId();
-      Cookies.set('userId', userId,{ maxAge:  3600000 , httpOnly: true });
-      return userId;
+        userId = generateRandomId();
+        Cookies.set('userId', userId, { maxAge: 3600000, httpOnly: true });
+        return userId;
     }
-    else{
-     return userId;
+    else {
+        return userId;
     }
- };
-
-
- const createOrder = async (req, res) => {
-    try {
-      let userId = cookieUserId();
-      
-  
-      // Construct the Order object
-      const newOrder = new Orders({
-        order_date: null,
-        phone: null,
-        address: null,
-        status: null,
-        pizzas: null,
-        total_price:null,
-        user:userId,
-      });
-  
-      await newOrder.save();
-      res.status(201).json(newOrder);
-    } catch (err) {
-      res.status(409).json({ message: err.message });
-    }
-  };
-
-
- 
+};
 const updateOrder = async (req, res) => {
     try {
-        const updatedOrder = await Orders.findByIdAndUpdate(req.params.id, req.body, {
-            new: true, // Return the modified document rather than the original
-            runValidators: true, // Run validation on update
+        const priceString = req.body.price;
+        console.log("Price received:", priceString, req.body);
+        //CONVERTING THE TYPE OF STRING VALU TO FLOAT
+        const price = parseFloat(req.body.price);
+
+        if (isNaN(price)) {
+            return res.status(400).json({ message: `Invalid price value  ${price}` });
+        }
+        else {
+            console.log(price);
+        }
+
+        // DEFINING A PIZZA FOR THE ARRAY IN ORDER
+        const pizza = {
+            quantity: req.body.quantity,
+            pizza_id: req.body.pizza_id,
+            subtotal: price * req.body.quantity,
+            name: req.body.name
+        };
+
+
+        console.log(`the user: ${req.body.user}`);
+        const filter = { user: req.body.user };
+        const update = {
+            $push: { pizzas: pizza },
+            $inc: { total_price: pizza.subtotal },
+            // $set: {
+            //     order_date: req.body.order_date,
+            //     phone: req.body.phone,
+            //     address: req.body.address,
+            //     status: req.body.status
+            // }
+        };
+
+        const updatedOrder = await Orders.findOneAndUpdate(filter, update, {
+            new: true,
+            runValidators: true
         });
 
         if (!updatedOrder) {
@@ -58,9 +65,35 @@ const updateOrder = async (req, res) => {
 
         res.status(200).json(updatedOrder);
     } catch (err) {
+        console.error("Update error:", err);
         res.status(500).json({ message: err.message });
     }
+
+}
+
+const createOrder = async (req, res) => {
+    try {
+        let userId = cookieUserId();
+
+
+        // Construct the Order object
+        const newOrder = new Orders({
+            order_date: null,
+            phone: null,
+            address: null,
+            status: null,
+            pizzas: [],
+            total_price: 0,
+            user: userId,
+        });
+
+        await newOrder.save();
+        res.status(201).json(newOrder);
+    } catch (err) {
+        res.status(409).json({ message: err.message });
+    }
 };
+
 
 
 const deleteOrder = async (req, res) => {

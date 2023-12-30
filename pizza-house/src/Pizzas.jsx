@@ -5,25 +5,49 @@ import { Link } from "react-router-dom";
 import ToggleInputButton from './components/ToggleInputButton';
 import SubmitBtn from './components/SubmitBtn';
 import Cookies from "js-cookie";
+// import { patch } from "../routes/order.js";
 
 export default function Pizzas() {
     const [pizzas, setPizzas] = useState([]);
-    const [showBtn, setShowBtn] = useState(true)
+    const [showBtn, setShowBtn] = useState(true);
+    const [userId, setUserId] = useState([]);
+    // let userId;
     const handleOrderClick = async ()  => {
         setShowBtn(!showBtn); // Toggles the showBtn state when the button is clicked
         try {
             console.log(`${config.apiUrl}}/orders/create`);
             const response = await axios.post(`${config.apiUrl}/orders/create`);
             const data = response.data;
-            Cookies.set('userId', data.user, { expires: 7}, { path: '/' }, { domain: 'example"http://localhost:5173' } );
-            let userId = Cookies.get('userId');
-            console.log(userId);
-            console.log(data._id);
+            setUserId(data.user);
+            console.log(`user id: ${userId}`);
+            console.log(`data id: ${data._id}`);
+            console.log(`user id from data: ${data.user}`);
 
         } catch (error) {
             console.log(error);
         }
     };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        // Collect form data
+        const formData = new FormData(e.target);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+        data['user']=userId;
+        console.log(`data in handlesubmit: ${data}`);
+        try {
+            console.log(`${config.apiUrl}/orders/update/${userId}`);
+          const response = await axios.patch(`${config.apiUrl}/orders/update/${userId}`, data);
+          console.log(response.data); // Handle the response here (success message or other actions)
+        } catch (error) {
+          console.error('Error:', error); // Handle errors here
+        }
+      };
+
     useEffect(() => {
         const fetchPizzas = async () => {
             try {
@@ -54,7 +78,7 @@ export default function Pizzas() {
             <h1>Pizzas</h1>
             {Array.isArray(pizzas) &&
                 pizzas.map((pizza) => (
-                    <form key={pizza._id} onSubmit={(e) => handleSubmit(e, pizza._id)}>
+                    <form key={pizza._id} onSubmit={(e) => handleSubmit(e)}>
                         <div>
                             <Link to={`/pizzas/${pizza._id}`} >
 
@@ -77,7 +101,8 @@ export default function Pizzas() {
                         </div>
                         <input type="hidden" name="name" value={pizza.name} />
                         <input type="hidden" name="price" value={pizza.price} />
-
+                        <input type="hidden" name="user" value={userId} />
+                        <input type="hidden" name="pizza_id" value={pizza._id} />
                     </form>
                 ))};
         </div>
