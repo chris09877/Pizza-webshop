@@ -19,16 +19,17 @@ const cookieUserId = () => {
     }
 };
 
-
+//
 
 const formUpdateOrder = async (req, res) => {
+    console.log("form");
     try {
         console.log(req.params.id);
       const userId = req.params.id; // Assuming userId is passed as a parameter
   
       // Fetch the order to be updated using the userId
       const order = await Orders.findOne({ user: userId });
-  
+        console.log(order);
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
