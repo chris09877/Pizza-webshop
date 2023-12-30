@@ -18,6 +18,38 @@ const cookieUserId = () => {
         return userId;
     }
 };
+
+
+
+const formUpdateOrder = async (req, res) => {
+    try {
+        console.log(req.params.id);
+      const userId = req.params.id; // Assuming userId is passed as a parameter
+  
+      // Fetch the order to be updated using the userId
+      const order = await Orders.findOne({ user: userId });
+  
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+  
+      // Update the order fields based on the form data
+      order.order_date = req.body.order_date || order.order_date;
+      order.phone = req.body.phone || order.phone;
+      order.address = req.body.address || order.address;
+      order.status = req.body.status || order.status;
+  
+      // Save the updated order
+      const updatedOrder = await order.save();
+  
+      res.status(200).json(updatedOrder);
+    } catch (err) {
+        console.log(err);
+      res.status(500).json({ message: err.message });
+    }
+  };
+
+
 const updateOrder = async (req, res) => {
     try {
         const priceString = req.body.price;
@@ -137,38 +169,7 @@ const getOrderById = async (req, res) => {
         console.error("Error:", err);
         res.status(500).json({ message: err.message });
       }
-      
-    // try {
-    //     const ordersData = await Orders.findOne({ user: req.params.id });
-    //     if (!ordersData) {
-    //         return res.status(404).json({ message: "User not found" });
-    //     }
-    //     res.status(200).json(ordersData);
-    // } catch (err) {
-    //     res.status(500).json({ message: err.message });
-    // }
-
-//     try {
-//         const ordersData = await Orders.findById(req.params.id);
-//         if (!ordersData) {
-//             return res.status(404).json({ message: "User not found" });
-//         }
-//         res.status(200).json(ordersData);
-//     } catch (err) {
-//         res.status(500).json({ message: err.message });
-//     }
-
-//     try {
-//         const pizzaId = new mongoose.Types.ObjectId(req.params.id); // Convert string ID to ObjectId
-//        const pizzasData = await PizzasModel.findById(pizzaId);
-//        console.log(req.params.id);
-//        if (!pizzasData) {
-//         return res.status(404).json({ message: "User not found" });
-//     }
-//        res.status(200).json(pizzasData);
-//    } catch (err) {
-//        res.status(500).json({ message: err.message });
-//    }
+ 
 };
 
 module.exports = {
@@ -177,4 +178,5 @@ module.exports = {
     deleteOrder,
     getOrderById,
     getOrders,
+    formUpdateOrder,
 };

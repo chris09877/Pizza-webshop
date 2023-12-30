@@ -13,40 +13,12 @@ const OrderDetails = ({ title }) => {
     };
     const getOrderDetails = async () => {
         try {
-            console.log(`fetch from component order etails: ${config.apiUrl}/order/${storedUserId}`);
+            console.log(`fetch from component order etails: ${config.apiUrl}/orders/${storedUserId}`);
             const response = await axios.get(`${config.apiUrl}/orders/${storedUserId}`);
             const data = response.data;
             setPizzas(data.pizzas);
             
-            // return (
-            //     <div>
-            //         <header onClick={toggleExpansion}>
-            //             <h3 >{title} </h3>
-            //             {/* <div >
-            //           <span >{orderItemCount} items</span>
-            //           <span >Total: €{totalPrice}</span>
-            //         </div> */}
-            //         </header>
-            //         {isExpanded && (
-            //             <div>
-            //                 <p>Order Details:</p>
-            
-            //                 {pizzas ? (
-            //                     <div>
-            //                         {pizzas.map((pizza, index) => (
-            //                             <div key={index}>
-            //                                 <p>Name: {pizza.name}</p>
-            //                                 <p>Quantity: {pizza.quantity}</p>
-            //                             </div>
-            //                         ))}
-            //                     </div>
-            //                 ) : (
-            //                     <p>Let's order a tasty pizza!</p>
-            //                 )}
-            //             </div>
-            //         )}
-            //     </div>
-           // );
+           
         } 
         catch (error) {
             console.log(error);
@@ -79,6 +51,9 @@ return (
                 ) : (
                     <p>Let's order a tasty pizza!</p>
                 )}
+                <div>
+                    <button>Order</button>
+                </div>
             </div>
         )}
     </div>

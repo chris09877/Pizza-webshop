@@ -1,6 +1,6 @@
 const express =  require('express');
 
-const {createOrder, getOrders, getOrderById, updateOrder, deleteOrder} = require('../controllers/order.js');
+const {createOrder, getOrders, getOrderById, updateOrder, deleteOrder,formUpdateOrder} = require('../controllers/order.js');
 
 // const { verifyToken } = require("../middleware/auth.js");
 
@@ -16,6 +16,7 @@ router.get("/:id", getOrderById);
 /* UPDATE */
 
 router.patch("/update/:id", updateOrder);
+router.patch("/checkout/:id", formUpdateOrder);
 
 /* DELETE */
 

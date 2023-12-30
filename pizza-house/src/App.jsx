@@ -8,6 +8,7 @@ import Cart from './Cart';
 import AdminPanel from './AdminPanel';
 import Login from './Login';
 import PizzaShow from './PizzaShow';
+import ValidateOrder from './ValidateOrder';
 function App() {
 
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/' ></Route>
         <Route path='/pizzas' element={<Pizzas/>}>Pizzas</Route>
         <Route path='/pizzas/:id' element={<PizzaShow/>}>Pizza detail</Route>
+        <Route path='/checkout' element={<ValidateOrder/>}>Checkout</Route>
 
         <Route path='/cart' element={<Cart/>}>Cart</Route>
         <Route path='/admin panel' element={<AdminPanel/>}>AdminPanel</Route>
