@@ -46,12 +46,12 @@ const updateOrder = async (req, res) => {
         const update = {
             $push: { pizzas: pizza },
             $inc: { total_price: pizza.subtotal },
-            // $set: {
-            //     order_date: req.body.order_date,
-            //     phone: req.body.phone,
-            //     address: req.body.address,
-            //     status: req.body.status
-            // }
+            $set: {
+                order_date: req.body.order_date,
+                phone: req.body.phone,
+                address: req.body.address,
+                status: req.body.status
+            }
         };
 
         const updatedOrder = await Orders.findOneAndUpdate(filter, update, {
