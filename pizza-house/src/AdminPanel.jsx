@@ -1,11 +1,11 @@
 import React from "react";
 import Panel from "./components/Panel";
-function AdminPanel(){
-    return(
+function AdminPanel() {
+    return (
         <div>
-<h1>Admin Panel</h1>        
-<Panel />
-</div>
+            <h1>Admin Panel</h1>
+            <Panel />
+        </div>
     )
 }
 

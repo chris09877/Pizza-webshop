@@ -41,6 +41,15 @@ app.use('/carts', OrderDetailsRoutes);
 // const secretKey = crypto.randomBytes(32).toString('hex'); 
 // console.log(secretKey);
 
+// Generate a 32-byte (256-bit) random string for JWT KEY
+// const crypto = require('crypto');
+// // Generate a random buffer
+// const randomBytes = crypto.randomBytes(32);
+// // Convert buffer to a hexadecimal string
+// const secretKey2 = randomBytes.toString('hex');
+// console.log(secretKey2); // This is your generated secret key
+
+
 const PORT = process.env.PORT || 3001;
 //connection to mongoDB
 mongoose.connect(process.env.MONGO_KEY, {

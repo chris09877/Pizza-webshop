@@ -1,6 +1,6 @@
 const express =  require('express');
 
-const {getUsers, getUsersById,deleteUsers} = require('../controllers/user.js');
+const {getUsers, getUsersById,deleteUsers,login} = require('../controllers/user.js');//
 
 // const { verifyToken } = require("../middleware/auth.js");
 
@@ -18,4 +18,10 @@ router.get("/:id", getUsersById);
 /* DELETE */
 
 router.delete("/delete/:id", deleteUsers);
+
+
+/**POST */
+router.post("/login", login);
+
+
 module.exports = router;

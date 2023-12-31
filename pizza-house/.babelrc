@@ -1,10 +1,23 @@
+// {
+//     "presets": [
+//       "@babel/preset-env",
+//       "@babel/preset-react"
+//     ],
+//     "plugins": [
+//       "@babel/plugin-transform-modules-commonjs"
+//     ]
+//   }
 {
     "presets": [
-      "@babel/preset-env",
+      [
+        "@babel/preset-env",
+        {
+          "targets": "defaults",
+          "modules": "commonjs"
+          // Other preset options if needed
+        }
+      ],
       "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/plugin-transform-modules-commonjs"
     ]
   }
   

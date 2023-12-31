@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Pizzas from './Pizzas';
@@ -9,10 +8,14 @@ import AdminPanel from './AdminPanel';
 import Login from './Login';
 import PizzaShow from './PizzaShow';
 import ValidateOrder from './ValidateOrder';
+import { AuthProvider } from './components/AuthContext.jsx';
+
 function App() {
 
   return (
     <div>
+          <AuthProvider>
+
       <BrowserRouter>
       <Routes>
         <Route path='/' ></Route>
@@ -26,6 +29,8 @@ function App() {
 
       </Routes>
       </BrowserRouter>
+      </AuthProvider>
+
     </div>
   )
 }
