@@ -6,6 +6,7 @@ import {useAuth}  from './components/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import config from "../config";
+import Cookies from 'js-cookie';
 
 const Login = () => {
 //   const history = useHistory();
@@ -40,6 +41,7 @@ const redirect =()=>{
        
             const token = response.data.token;
              setAuthInfo({ token: {token}, isAuthenticated: true });
+             Cookies.set("token", token, { expires: 1 })
              redirect();
             //  console.log("navigate");
             //  let navigate = useNavigate();

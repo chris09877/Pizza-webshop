@@ -9,6 +9,7 @@ import Login from './Login';
 import PizzaShow from './PizzaShow';
 import ValidateOrder from './ValidateOrder';
 import { AuthProvider } from './components/AuthContext.jsx';
+import ProtectedRoute from './components/ProtectedRoutes';
 
 function App() {
 
@@ -22,9 +23,16 @@ function App() {
         <Route path='/pizzas' element={<Pizzas/>}>Pizzas</Route>
         <Route path='/pizzas/:id' element={<PizzaShow/>}>Pizza detail</Route>
         <Route path='/checkout' element={<ValidateOrder/>}>Checkout</Route>
+        {/* <Route path='/cart' element={<Cart/>}>Cart</Route> */}
 
-        <Route path='/cart' element={<Cart/>}>Cart</Route>
-        <Route path='/admin panel' element={<AdminPanel/>}>AdminPanel</Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path='/cart' element={<Cart/>}>Cart</Route>
+          <Route path='/admin panel' element={<AdminPanel/>}>AdminPanel</Route>
+          {/*RAJOUTE ROUTE POUR SPECIFIC ORER*/}
+        </Route>
+        {/* <ProtectedRoute path="/" element={<Cart />} /> */}
+
+        {/* <ProtectedRoute exact path="/cart" component={<Cart/>} /> */}
         <Route path='/login' element={<Login/>}>Login</Route>
 
       </Routes>
