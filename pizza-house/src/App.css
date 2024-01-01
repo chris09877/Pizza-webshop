@@ -1,3 +1,10 @@
+/* main.css or main.scss */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+
 #root {
   max-width: 1280px;
   margin: 0 auto;

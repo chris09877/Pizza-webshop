@@ -151,13 +151,12 @@ const getOrders = async (req, res) => {
     }
 };
 
-const getOrderById2 = async (req, res) => {
+const getOrderByUserId = async (req, res) => {
     try {
-        console.log(Cookies.get('userId'));
         const userId = req.params.id; // Extract the user ID from req.params
         console.log(`Searching for user with ID: ${userId}`);
       
-        const ordersData = await Orders.findOne({ user: userId });
+        const ordersData = await Orders.findOne({ user: req.params.id });
       
         if (!ordersData) {
           console.log(`User with ID ${userId} not found in the database.`);
@@ -191,7 +190,7 @@ const getOrderById = async (req, res) => {
             console.log(`Order with ID ${orderId} not found in the database.`);
             return res.status(404).json({ message: "Order not found" });
           }
-      //
+      
           console.log(`Order with ID ${orderId} found:`);
           console.log(ordersData);
       
@@ -210,4 +209,5 @@ module.exports = {
     getOrderById,
     getOrders,
     formUpdateOrder,
+    getOrderByUserId,
 };

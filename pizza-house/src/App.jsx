@@ -16,29 +16,29 @@ function App() {
 
   return (
     <div>
-          <AuthProvider>
+      <AuthProvider>
 
-      <BrowserRouter>
-      <Routes>
-        <Route path='/' ></Route>
-        <Route path='/pizzas' element={<Pizzas/>}>Pizzas</Route>
-        <Route path='/pizzas/:id' element={<PizzaShow/>}>Pizza detail</Route>
-        <Route path='/checkout' element={<ValidateOrder/>}>Checkout</Route>
-        {/* <Route path='/cart' element={<Cart/>}>Cart</Route> */}
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' ></Route>
+            <Route path='/pizzas' element={<Pizzas />}>Pizzas</Route>
+            <Route path='/pizzas/:id' element={<PizzaShow />}>Pizza detail</Route>
+            <Route path='/checkout' element={<ValidateOrder />}>Checkout</Route>
+            {/* <Route path='/cart' element={<Cart/>}>Cart</Route> */}
 
-        <Route element={<ProtectedRoute />}>
-          <Route path='/cart' element={<Cart/>}>Cart</Route>
-          <Route path='/admin panel' element={<AdminPanel/>}>AdminPanel</Route>
-          <Route path='/order/:id' element={<OrderShow/>} />
-          {/*RAJOUTE ROUTE POUR SPECIFIC ORER*/}
-        </Route>
-        {/* <ProtectedRoute path="/" element={<Cart />} /> */}
+            <Route element={<ProtectedRoute />}>
+              <Route path='/cart' element={<Cart />}>Cart</Route>
+              <Route path='/admin panel' element={<AdminPanel />}>AdminPanel</Route>
+              <Route path='/order/:id' element={<OrderShow />} />
+              {/*RAJOUTE ROUTE POUR SPECIFIC ORER*/}
+            </Route>
+            {/* <ProtectedRoute path="/" element={<Cart />} /> */}
 
-        {/* <ProtectedRoute exact path="/cart" component={<Cart/>} /> */}
-        <Route path='/login' element={<Login/>}>Login</Route>
+            {/* <ProtectedRoute exact path="/cart" component={<Cart/>} /> */}
+            <Route path='/login' element={<Login />}>Login</Route>
 
-      </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
       </AuthProvider>
 
     </div>
