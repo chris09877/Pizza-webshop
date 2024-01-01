@@ -8,6 +8,7 @@ import AdminPanel from './AdminPanel';
 import Login from './Login';
 import PizzaShow from './PizzaShow';
 import ValidateOrder from './ValidateOrder';
+import OrderShow from './OrderShow.jsx';
 import { AuthProvider } from './components/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoutes';
 
@@ -28,6 +29,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path='/cart' element={<Cart/>}>Cart</Route>
           <Route path='/admin panel' element={<AdminPanel/>}>AdminPanel</Route>
+          <Route path='/order/:id' element={<OrderShow/>} />
           {/*RAJOUTE ROUTE POUR SPECIFIC ORER*/}
         </Route>
         {/* <ProtectedRoute path="/" element={<Cart />} /> */}

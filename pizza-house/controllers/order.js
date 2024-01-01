@@ -1,5 +1,6 @@
 const { Orders } = require("../models/Models.js");
 const Cookies = require('js-cookie');
+const mongoose = require('mongoose');
 
 
 
@@ -150,8 +151,9 @@ const getOrders = async (req, res) => {
     }
 };
 
-const getOrderById = async (req, res) => {
+const getOrderById2 = async (req, res) => {
     try {
+        console.log(Cookies.get('userId'));
         const userId = req.params.id; // Extract the user ID from req.params
         console.log(`Searching for user with ID: ${userId}`);
       
@@ -171,6 +173,34 @@ const getOrderById = async (req, res) => {
         res.status(500).json({ message: err.message });
       }
  
+};
+
+const getOrderById = async (req, res) => {
+
+    // let orderId = req.params.id;
+    // const ordersData = await Orders.findOne({ order_id: orderId });
+
+   
+        try {
+          const orderId = new mongoose.Types.ObjectId(req.params.id); // Extract the order ID from req.params
+          console.log(`Searching for order with ID: ${orderId}`);
+      
+          const ordersData = await Orders.findById(orderId );
+      
+          if (!ordersData) {
+            console.log(`Order with ID ${orderId} not found in the database.`);
+            return res.status(404).json({ message: "Order not found" });
+          }
+      //
+          console.log(`Order with ID ${orderId} found:`);
+          console.log(ordersData);
+      
+          res.status(200).json(ordersData);
+        } catch (err) {
+          console.error("Error:", err);
+          res.status(500).json({ message: err.message });
+        }
+    
 };
 
 module.exports = {

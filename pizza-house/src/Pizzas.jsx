@@ -6,7 +6,7 @@ import ToggleInputButton from './components/ToggleInputButton';
 import SubmitBtn from './components/SubmitBtn';
 import Cookies from "js-cookie";
 import OrderDetails from './components/OrderDetails';
-
+import Navbar from "./components/NavBar";
 export default function Pizzas() {
     const [pizzas, setPizzas] = useState([]);
     const [showBtn, setShowBtn] = useState(true);
@@ -14,7 +14,7 @@ export default function Pizzas() {
     const [orderDetails, setOrderDetails] = useState([]);
 
     // let userId;
-    const handleOrderClick = async ()  => {
+    const handleOrderClick = async () => {
         setShowBtn(!showBtn); // Toggles the showBtn state when the button is clicked
         try {
             console.log(`${config.apiUrl}}/orders/create`);
@@ -32,29 +32,29 @@ export default function Pizzas() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         // Collect form data
         const formData = new FormData(e.target);
         const data = {};
         formData.forEach((value, key) => {
-          data[key] = value;
+            data[key] = value;
         });
-        data['user']=userId;
+        data['user'] = userId;
         console.log(`data in handlesubmit: ${data}`);
         try {
-        console.log(`${config.apiUrl}/orders/update/${userId}`);
-          const response = await axios.patch(`${config.apiUrl}/orders/update/${userId}`, data);
-          
-          //console.log(response.data); // Handle the response here (success message or other actions)
-          
-        //   setOrderDetails(await response.data);
-        //   console.log(` data send to component: ${orderDetails}`);
-          
-          
+            console.log(`${config.apiUrl}/orders/update/${userId}`);
+            const response = await axios.patch(`${config.apiUrl}/orders/update/${userId}`, data);
+
+            //console.log(response.data); // Handle the response here (success message or other actions)
+
+            //   setOrderDetails(await response.data);
+            //   console.log(` data send to component: ${orderDetails}`);
+
+
         } catch (error) {
-          console.error('Error:', error); // Handle errors here
+            console.error('Error:', error); // Handle errors here
         }
-      };
+    };
 
 
     useEffect(() => {
@@ -79,20 +79,24 @@ export default function Pizzas() {
     }, []);
 
     return (
-       
-        <div>
-             <div>
-                <button onClick={handleOrderClick}>ORDER</button>
-             </div>
-             <div>
-      <OrderDetails
 
-        title="Your Order"
-        
-      />
-      {/* Other components */}
-      {/* ... */}
-    </div>
+
+        <div>
+            <div>
+                <Navbar />
+            </div>
+            <div>
+                <button onClick={handleOrderClick}>ORDER</button>
+            </div>
+            <div>
+                <OrderDetails
+
+                    title="Your Order"
+
+                />
+                {/* Other components */}
+                {/* ... */}
+            </div>
             <h1>Pizzas</h1>
             {Array.isArray(pizzas) &&
                 pizzas.map((pizza) => (

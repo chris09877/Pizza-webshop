@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from "../../config";
-
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 const Panel = () => {
   const [orderP, setOrderP] = useState([]);
   const [orderD, setOrderD] = useState([]);
   const [orderC, setOrderC] = useState([]);
+  const navigate = useNavigate();
   const storedUserId = localStorage.getItem('userId');
+  const navigateToOrderShow = (orderId) => {
+    Cookies.set("orderId", orderId, { expires: 1/24 }); // 1/24 represents 1 hour
+    navigate(`/order/${orderId}`);
+  };
 
   useEffect(() => {
     async function fetchOrders() {
@@ -58,9 +64,10 @@ const Panel = () => {
           </tr>
         </thead>
         <tbody>
-          {orders.map(order => (
-            
-            <tr key={order._id}>
+          {orders.map(order => 
+          (
+           
+            <tr key={order._id} onClick={ () => navigateToOrderShow(order._id)}>
               <td><span>#{count++}</span>
                 <span>pizzas:{order.pizzas.length}</span>
               <span>time: {order.order_date}</span>
