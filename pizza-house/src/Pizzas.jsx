@@ -16,6 +16,8 @@ export default function Pizzas() {
     // let userId;
     const handleOrderClick = async () => {
         setShowBtn(!showBtn); // Toggles the showBtn state when the button is clicked
+        if (localStorage.getItem('userId') === null)
+        {
         try {
             console.log(`${config.apiUrl}}/orders/create`);
             const response = await axios.post(`${config.apiUrl}/orders/create`);
@@ -28,6 +30,7 @@ export default function Pizzas() {
         } catch (error) {
             console.log(error);
         }
+    }
     };
 
     const handleSubmit = async (e) => {
