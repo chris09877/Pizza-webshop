@@ -42,7 +42,7 @@ const PizzaDetails = () => {
                         <h2 className="text-2xl font-bold mb-4">{pizza.name}</h2>
                         <p className="text-lg font-semibold">Price: ${pizza.price}</p>
                         <p className="mb-4">{pizza.description}</p>
-                        <img src={pizza.imageurl} alt={pizza.name} className="w-full rounded-md" />
+                        <img src={`../public/${pizza.name}.jpg`} alt={pizza.name} className="w-full rounded-md" />
                     </div>
                 )}
 

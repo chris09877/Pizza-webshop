@@ -132,10 +132,12 @@ export default function Pizzas() {
       <div className="bg-white p-4 shadow-md">
         <Link to={`/pizzas/${pizza._id}`} className="block">
           <h2 className="text-lg font-semibold mb-2">{pizza.name}</h2>
-          <img src={pizza.imgUrl} alt={pizza.name} className="w-full h-40 object-cover mb-2" />
+          <img src={`../public/${pizza.name}.jpg`} alt={pizza.name} className="w-full h-40 object-cover mb-2" />
           <p className="text-gray-600 mb-2">{pizza.price}</p>
           <p className="text-sm text-gray-500 mb-2">{pizza.description}</p>
-          <label className="block mb-2">
+          
+        </Link>
+        <label className="block mb-2">
             Quantity:
             <input
               type="number"
@@ -145,7 +147,6 @@ export default function Pizzas() {
               className="block w-full border border-gray-300 rounded px-2 py-1"
             />
           </label>
-        </Link>
         <button hidden={showBtn} type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
           Add
         </button>
@@ -158,7 +159,7 @@ export default function Pizzas() {
   ))}
 </div>
 
-  }));
+  }
         </div>
     );
 };
