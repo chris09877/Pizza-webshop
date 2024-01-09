@@ -1,6 +1,7 @@
 import React from "react";
 import Form from "./components/Form";
 import Navbar from "./components/NavBar";
+import BackButton from './components/BackButton';
 
 function ValidateOrder(){
     return(
@@ -14,6 +15,10 @@ function ValidateOrder(){
           <Form />
         </div>
       </main>
+      <div>
+      {/* Your page content */}
+      <BackButton /> {/* Use the BackButton component */}
+    </div>
     </div>
     )
 }

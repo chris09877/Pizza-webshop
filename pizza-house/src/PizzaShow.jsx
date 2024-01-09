@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import config from "../config";
 import axios from 'axios';
 import Navbar from "./components/NavBar";
-
+import BackButton from './components/BackButton';
 const PizzaDetails = () => {
     const { id } = useParams();
     const [pizza, setPizza] = useState(null);
@@ -42,11 +42,15 @@ const PizzaDetails = () => {
                         <h2 className="text-2xl font-bold mb-4">{pizza.name}</h2>
                         <p className="text-lg font-semibold">Price: ${pizza.price}</p>
                         <p className="mb-4">{pizza.description}</p>
-                        <img src={`../public/${pizza.name}.jpg`} alt={pizza.name} className="w-full rounded-md" />
+                        <img src={`/${pizza.name}.jpg`} alt={pizza.name} className="w-full rounded-md" />
                     </div>
                 )}
 
             </main>
+            <div>
+      {/* Your page content */}
+      <BackButton /> {/* Use the BackButton component */}
+    </div>
         </div>
     );
 };

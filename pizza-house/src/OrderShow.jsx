@@ -1,6 +1,7 @@
 import React from "react";
 import FinalizedOrderDetails from "./components/FinalizedOrderDetails";
 import Navbar from "./components/NavBar";
+import BackButton from './components/BackButton';
 
 function OrderShow() {
     return (
@@ -12,6 +13,10 @@ function OrderShow() {
                     <h1 className="text-5xl font-semibold mb-4">Order Detail</h1>
                     <FinalizedOrderDetails />
                 </main>
+                <div>
+      {/* Your page content */}
+      <BackButton /> {/* Use the BackButton component */}
+    </div>
             </div>
        
     )

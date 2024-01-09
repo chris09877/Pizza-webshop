@@ -132,7 +132,7 @@ export default function Pizzas() {
       <div className="bg-white p-4 shadow-md">
         <Link to={`/pizzas/${pizza._id}`} className="block">
           <h2 className="text-lg font-semibold mb-2">{pizza.name}</h2>
-          <img src={`../public/${pizza.name}.jpg`} alt={pizza.name} className="w-full h-40 object-cover mb-2" />
+          <img src={`/${pizza.name}.jpg`} alt={pizza.name} className="w-full h-40 object-cover mb-2" />
           <p className="text-gray-600 mb-2">{pizza.price}</p>
           <p className="text-sm text-gray-500 mb-2">{pizza.description}</p>
           
