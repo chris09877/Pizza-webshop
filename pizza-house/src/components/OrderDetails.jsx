@@ -11,6 +11,9 @@ const OrderDetails = ({ title }) => {
         setIsExpanded(!isExpanded);
         getOrderDetails();
     };
+    const handleOrder = () => {
+      window.location.href = '/checkout'; // Redirect to checkout page on button click
+    };
     const getOrderDetails = async () => {
         try {
             console.log(`fetch from component order etails: ${config.apiUrl}/orders/user/${storedUserId}`);
@@ -82,16 +85,18 @@ const OrderDetails = ({ title }) => {
             </div>
           ))}
         </div>
+        
       ) : (
         <p className="mt-2 text-lg">Let's order a tasty pizza!</p>
       )}
       <div className="mt-4">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onClick={handleOrder}>
           Order
         </button>
       </div>
     </div>
   )}
+  
 </div>
 
     );
