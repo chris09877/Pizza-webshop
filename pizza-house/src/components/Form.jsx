@@ -10,6 +10,7 @@ const Form = () => {
     phone: '',
     address: '',
     status: '',
+    name: '',
   });
 
   const handleChange = (e) => {
@@ -19,12 +20,30 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Custom validations
+    if (!formData.name.match(/^[a-zA-Z\s]*$/)) {
+      alert('Name cannot contain numbers');
+      return;
+    }
+
+    // if (formData.phone === '' && formData.landline === '') {
+    //   alert('Either mobile phone or landline is required');
+    //   return;
+    // }
+
+    if (isNaN(formData.phone)) {
+      alert('Phone numbers accept only numbers');
+      return;
+    }
+
     try {
       const response = await axios.patch(`${config.apiUrl}/orders/checkout/${storedUserId}`, formData);
       console.log('Order updated:', response.data);
       console.log(`${config.apiUrl}/orders/checkout/${storedUserId}`);
-      // Handle success or further actions upon successful update
-    } catch (error) {
+      alert('Order proceed');
+      window.location.href = '/';
+        } catch (error) {
       console.error('Error updating order:', error);
       // Handle error cases
     }
@@ -98,6 +117,7 @@ const Form = () => {
   // </div>
   // <button type="submit" className="form-button">Submit</button>
 <form onSubmit={handleSubmit} className="my-form max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
+  
   <div className="mb-4">
     <label htmlFor="order_date" className="block text-gray-700 font-semibold mb-2">Order Date:</label>
     <input
@@ -105,6 +125,17 @@ const Form = () => {
       id="order_date"
       name="order_date"
       value={formData.order_date}
+      onChange={handleChange}
+      className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+    />
+  </div>
+  <div className="mb-4">
+    <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      value={formData.name}
       onChange={handleChange}
       className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
     />
@@ -131,9 +162,9 @@ const Form = () => {
       className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
     />
   </div>
-  <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
+  {/* <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
     Submit
-  </button>
+  </button> */}
 
 
 
@@ -148,7 +179,7 @@ const Form = () => {
         />
       </div> */}
       <input type="hidden" name='user' value={storedUserId} />
-      <button type="submit">Update Order</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };
