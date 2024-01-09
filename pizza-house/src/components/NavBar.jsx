@@ -56,16 +56,14 @@ const Navbar = () => {
         <NavLink to="/" className="text-blue-500 hover:text-blue-700">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/pizzas" className="text-blue-500 hover:text-blue-700">Pizzas</NavLink>
+        <NavLink to="/pizzas" className="text-blue-500 hover:text-blue-700">Menu</NavLink>
       </li>
       <li>
         <NavLink to="/checkout" className="text-blue-500 hover:text-blue-700">Checkout</NavLink>
       </li>
       {tokenExists && (
         <>
-          <li>
-            <NavLink to="/cart" className="text-blue-500 hover:text-blue-700">Cart</NavLink>
-          </li>
+          
           <li>
             <NavLink to="/admin panel" className="text-blue-500 hover:text-blue-700">Admin Panel</NavLink>
           </li>

@@ -3,6 +3,10 @@ module.exports = {
   content: [
     "./src/**/*.jsx",
     "./src/**/*.css",
+    "./src/*.jsx",
+    "./src/*.css",
+    //"./src/components/*.jsx", // Include component files explicitly
+    //"./src/components/*.css",
   ]
   ,
   theme: {
