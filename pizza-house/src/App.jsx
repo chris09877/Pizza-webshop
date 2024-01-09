@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
+import Homepng from './assets/pizza-house.png';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Pizzas from './Pizzas';
 import Cart from './Cart';
 import AdminPanel from './AdminPanel';
+import Home from './Home.jsx';
+
 import Login from './Login';
 import PizzaShow from './PizzaShow';
 import ValidateOrder from './ValidateOrder';
 import OrderShow from './OrderShow.jsx';
 import { AuthProvider } from './components/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoutes';
+import Navbar from "./components/NavBar";
 
 function App() {
 
@@ -20,7 +24,7 @@ function App() {
 
         <BrowserRouter>
           <Routes>
-            <Route path='/' ></Route>
+            <Route path='/' element={<Home />}></Route>
             <Route path='/pizzas' element={<Pizzas />}>Pizzas</Route>
             <Route path='/pizzas/:id' element={<PizzaShow />}>Pizza detail</Route>
             <Route path='/checkout' element={<ValidateOrder />}>Checkout</Route>
