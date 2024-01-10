@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 
 const generateRandomId = () => {
-    return Math.random().toString(36).substr(2, 9); // Generate a random alphanumeric string
+    return Math.random().toString(36).substr(2, 9);
 };
 
 const cookieUserId = () => {
@@ -26,32 +26,32 @@ const formUpdateOrder = async (req, res) => {
     console.log("form");
     try {
         console.log(req.params.id);
-      const userId = req.params.id; // Assuming userId is passed as a parameter
-  
-      // Fetch the order to be updated using the userId
-      const order = await Orders.findOne({ user: userId });
+        const userId = req.params.id;
+
+        // Fetch the order to be updated using the userId
+        const order = await Orders.findOne({ user: userId });
         console.log(order);
         // console.log(`body of params: ${req.body.user}`);
-      if (!order) {
-        return res.status(404).json({ message: "Order not found" });
-      }
-  
-      // Update the order fields based on the form data
-      order.order_date = req.body.order_date || order.order_date;
-      order.phone = req.body.phone || order.phone;
-      order.address = req.body.address || order.address;
-      order.status = req.body.status || "pending" ;//|| order.status;
-      order.user = req.body.name|| order.user;
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
 
-      // Save the updated order
-      const updatedOrder = await order.save();
-  
-      res.status(200).json(updatedOrder);
+        // Update the order fields based on the form data
+        order.order_date = req.body.order_date || order.order_date;
+        order.phone = req.body.phone || order.phone;
+        order.address = req.body.address || order.address;
+        order.status = req.body.status || "pending";//|| order.status;
+        order.user = req.body.name || order.user;
+
+        // Save the updated order
+        const updatedOrder = await order.save();
+
+        res.status(200).json(updatedOrder);
     } catch (err) {
         console.log(err);
-      res.status(500).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
-  };
+};
 
 
 const updateOrder = async (req, res) => {
@@ -155,25 +155,25 @@ const getOrders = async (req, res) => {
 
 const getOrderByUserId = async (req, res) => {
     try {
-        const userId = req.params.id; // Extract the user ID from req.params
+        const userId = req.params.id;
         console.log(`Searching for user with ID: ${userId}`);
-      
+
         const ordersData = await Orders.findOne({ user: req.params.id });
-      
+
         if (!ordersData) {
-          console.log(`User with ID ${userId} not found in the database.`);
-          return res.status(404).json({ message: "User not found" });
+            console.log(`User with ID ${userId} not found in the database.`);
+            return res.status(404).json({ message: "User not found" });
         }
-      
+
         console.log(`User with ID ${userId} found:`);
         console.log(ordersData);
-      
+
         res.status(200).json(ordersData);
-      } catch (err) {
+    } catch (err) {
         console.error("Error:", err);
         res.status(500).json({ message: err.message });
-      }
- 
+    }
+
 };
 
 const getOrderById = async (req, res) => {
@@ -181,27 +181,27 @@ const getOrderById = async (req, res) => {
     // let orderId = req.params.id;
     // const ordersData = await Orders.findOne({ order_id: orderId });
 
-   
-        try {
-          const orderId = new mongoose.Types.ObjectId(req.params.id); // Extract the order ID from req.params
-          console.log(`Searching for order with ID: ${orderId}`);
-      
-          const ordersData = await Orders.findById(orderId );
-      
-          if (!ordersData) {
+
+    try {
+        const orderId = new mongoose.Types.ObjectId(req.params.id); // Extract the order ID from req.params
+        console.log(`Searching for order with ID: ${orderId}`);
+
+        const ordersData = await Orders.findById(orderId);
+
+        if (!ordersData) {
             console.log(`Order with ID ${orderId} not found in the database.`);
             return res.status(404).json({ message: "Order not found" });
-          }
-      
-          console.log(`Order with ID ${orderId} found:`);
-          console.log(ordersData);
-      
-          res.status(200).json(ordersData);
-        } catch (err) {
-          console.error("Error:", err);
-          res.status(500).json({ message: err.message });
         }
-    
+
+        console.log(`Order with ID ${orderId} found:`);
+        console.log(ordersData);
+
+        res.status(200).json(ordersData);
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ message: err.message });
+    }
+
 };
 
 module.exports = {

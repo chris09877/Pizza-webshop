@@ -17,43 +17,21 @@ import ProtectedRoute from './components/ProtectedRoutes';
 import Navbar from "./components/NavBar";
 
 function App() {
-console.log(localStorage.getItem('token'));
-console.log(document.cookie.includes('token'));
+  console.log(localStorage.getItem('token'));
+  console.log(document.cookie.includes('token'));
   return (
-    // <div>
-      
-      
-    //   <div>
-    //   <Navbar />
-    //     <img src='../public/pizza-house.png' alt="pizza-house home" />
 
-    //   </div>
+    <div className="min-h-screen flex flex-col items-center">
+      <Navbar className="w-full" />
 
-    // </div>
-//     <div>
-//     <div className="min-h-screen flex flex-col items-center justify-center">
-//   <Navbar />
-  
-// </div>
-// <img
-//     src="../public/pizza-house.png"
-//     alt="pizza-house home"
-//     className="w-64 h-64 rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
-//   />
-// </div>
-<div className="min-h-screen flex flex-col items-center">
-  <Navbar className="w-full" />
-
-  <div className="flex-grow flex items-center justify-center">
-    <img
-      src="../public/pizza-house.png"
-      alt="pizza-house home"
-      className="rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
-
-     // className="w-64 h-64 rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
-    />
-  </div>
-</div>
+      <div className="flex-grow flex items-center justify-center">
+        <img
+          src="../public/pizza-house.png"
+          alt="pizza-house home"
+          className="rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
+        />
+      </div>
+    </div>
 
   )
 }

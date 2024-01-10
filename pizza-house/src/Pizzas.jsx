@@ -13,7 +13,7 @@ export default function Pizzas() {
     const [userId, setUserId] = useState([]);
     const [orderDetails, setOrderDetails] = useState([]);
 
-    // let userId;
+
     const handleOrderClick = async () => {
         console.log("inside handle on click");
         console.log(localStorage.getItem('userId'));
@@ -91,7 +91,7 @@ export default function Pizzas() {
             <div className="flex justify-center items-center">
                 <Navbar />
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-start">
                 <button onClick={handleOrderClick}>START ORDERING</button>
             </div>
             <div>
@@ -121,7 +121,7 @@ export default function Pizzas() {
                                     <input
                                         type="number"
                                         name="quantity"
-                                        defaultValue={1} // Default quantity is 1
+                                        defaultValue={1}
                                         min={1}
                                         className="block w-full border border-gray-300 rounded px-2 py-1"
                                     />

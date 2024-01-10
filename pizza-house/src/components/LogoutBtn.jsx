@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from './AuthContext'; // Update with the correct path to your AuthContext
+import { useAuth } from './AuthContext';
 
 const LogoutBtn = () => {
   const { logout } = useAuth();
@@ -8,8 +8,6 @@ const LogoutBtn = () => {
     logout();
     window.location = '/';
 
-    // Call the logout function from the AuthContext
-    // Optionally, you can redirect the user to the login page or perform any other action after logout
   };
 
   return (

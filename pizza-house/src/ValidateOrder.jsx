@@ -3,9 +3,9 @@ import Form from "./components/Form";
 import Navbar from "./components/NavBar";
 import BackButton from './components/BackButton';
 
-function ValidateOrder(){
-    return(
-        
+function ValidateOrder() {
+  return (
+
     <div className="flex flex-col min-h-screen">
       <Navbar />
 
@@ -16,11 +16,10 @@ function ValidateOrder(){
         </div>
       </main>
       <div>
-      {/* Your page content */}
-      <BackButton /> {/* Use the BackButton component */}
+        <BackButton />
+      </div>
     </div>
-    </div>
-    )
+  )
 }
 
 export default ValidateOrder;

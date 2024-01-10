@@ -1,5 +1,5 @@
-const express =  require('express');
-const {deletePizzas, getPizzas, getPizzasById} = require('../controllers/pizza.js');
+const express = require('express');
+const { deletePizzas, getPizzas, getPizzasById } = require('../controllers/pizza.js');
 
 // const { verifyToken } = require("../middleware/auth.js");
 

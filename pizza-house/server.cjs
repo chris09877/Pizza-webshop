@@ -18,9 +18,10 @@ app.use(session({
 //cors middleware
 app.use(cors({
   origin: 'http://localhost:5173',
-  credentials: false,}));
+  credentials: false,
+}));
 
- app.use(express.json());
+app.use(express.json());
 
 
 //DEFINING ROUTES
@@ -53,11 +54,11 @@ app.use('/carts', OrderDetailsRoutes);
 const PORT = process.env.PORT || 3001;
 //connection to mongoDB
 mongoose.connect(process.env.MONGO_KEY, {
-  
+
 }).then(() => {
   const connectedDb = mongoose.connection.name;
-console.log(`DB NAME: ${connectedDb}`);
-//
+  console.log(`DB NAME: ${connectedDb}`);
+  //
   console.log('Connected to MongoDB');
   app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
-}).catch((err) => console.log (`${err} did not connect`));
+}).catch((err) => console.log(`${err} did not connect`));

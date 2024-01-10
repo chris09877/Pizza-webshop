@@ -1,6 +1,6 @@
-const express =  require('express');
+const express = require('express');
 
-const {getUsers, getUsersById,deleteUsers,login} = require('../controllers/user.js');//
+const { getUsers, getUsersById, deleteUsers, login } = require('../controllers/user.js');//
 
 // const { verifyToken } = require("../middleware/auth.js");
 

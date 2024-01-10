@@ -17,7 +17,7 @@ const getPizzas = async (req, res) => {
 const getPizzasById = async (req, res) => {
     console.log("test");
     try {
-         const pizzaId = new mongoose.Types.ObjectId(req.params.id); // Convert string ID to ObjectId
+        const pizzaId = new mongoose.Types.ObjectId(req.params.id); // Convert string ID to ObjectId
         const pizzasData = await PizzasModel.findById(pizzaId);
         console.log(req.params.id);
         if (!pizzasData) {

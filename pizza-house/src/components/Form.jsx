@@ -3,8 +3,8 @@ import axios from 'axios';
 import config from "../../config";
 
 const Form = () => {
-    const storedUserId = localStorage.getItem('userId');
-  
+  const storedUserId = localStorage.getItem('userId');
+
   const [formData, setFormData] = useState({
     order_date: '',
     phone: '',
@@ -27,10 +27,7 @@ const Form = () => {
       return;
     }
 
-    // if (formData.phone === '' && formData.landline === '') {
-    //   alert('Either mobile phone or landline is required');
-    //   return;
-    // }
+
 
     if (isNaN(formData.phone)) {
       alert('Phone numbers accept only numbers');
@@ -45,145 +42,63 @@ const Form = () => {
       //localStorage.setItem('userId', null);
       localStorage.clear();
       window.location.href = '/';
-        } catch (error) {
+    } catch (error) {
       console.error('Error updating order:', error);
       // Handle error cases
     }
   };
 
   return (
-    // <form onSubmit={handleSubmit}>
-    //   <div>
-    //     <label htmlFor="order_date">Order Date:</label>
-    //     <input
-    //       type="datetime-local"
-    //       id="order_date"
-    //       name="order_date"
-    //       value={formData.order_date}
-    //       onChange={handleChange}
-    //     />
-    //   </div>
-    //   <div>
-    //     <label htmlFor="phone">Phone:</label>
-    //     <input
-    //       type="text"
-    //       id="phone"
-    //       name="phone"
-    //       value={formData.phone}
-    //       onChange={handleChange}
-    //     />
-    //   </div>
-    //   <div>
-    //     <label htmlFor="address">Address:</label>
-    //     <input
-    //       type="text"
-    //       id="address"
-    //       name="address"
-    //       value={formData.address}
-    //       onChange={handleChange}
-    //     />
-    //   </div>
-  //   <form onSubmit={handleSubmit} className="my-form">
-  // <div className="form-field">
-  //   <label htmlFor="order_date" className="form-label">Order Date:</label>
-  //   <input
-  //     type="datetime-local"
-  //     id="order_date"
-  //     name="order_date"
-  //     value={formData.order_date}
-  //     onChange={handleChange}
-  //     className="form-input"
-  //   />
-  // </div>
-  // <div className="form-field">
-  //   <label htmlFor="phone" className="form-label">Phone:</label>
-  //   <input
-  //     type="text"
-  //     id="phone"
-  //     name="phone"
-  //     value={formData.phone}
-  //     onChange={handleChange}
-  //     className="form-input"
-  //   />
-  // </div>
-  // <div className="form-field">
-  //   <label htmlFor="address" className="form-label">Address:</label>
-  //   <input
-  //     type="text"
-  //     id="address"
-  //     name="address"
-  //     value={formData.address}
-  //     onChange={handleChange}
-  //     className="form-input"
-  //   />
-  // </div>
-  // <button type="submit" className="form-button">Submit</button>
-<form onSubmit={handleSubmit} className="my-form max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
-  
-  <div className="mb-4">
-    <label htmlFor="order_date" className="block text-gray-700 font-semibold mb-2">Order Date:</label>
-    <input
-      type="datetime-local"
-      id="order_date"
-      name="order_date"
-      required
-      value={formData.order_date}
-      onChange={handleChange}
-      className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-    />
-  </div>
-  <div className="mb-4">
-    <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name:</label>
-    <input
-      type="text"
-      id="name"
-      name="name"
-      required
-      value={formData.name}
-      onChange={handleChange}
-      className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-    />
-  </div>
-  <div className="mb-4">
-    <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">Phone:</label>
-    <input
-      type="text"
-      id="phone"
-      name="phone"
-      required
-      value={formData.phone}
-      onChange={handleChange}
-      className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-    />
-  </div>
-  <div className="mb-4">
-    <label htmlFor="address" className="block text-gray-700 font-semibold mb-2">Address:</label>
-    <input
-      type="text"
-      id="address"
-      name="address"
-      required
-      value={formData.address}
-      onChange={handleChange}
-      className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-    />
-  </div>
-  {/* <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
-    Submit
-  </button> */}
+    <form onSubmit={handleSubmit} className="my-form max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
 
-
-
-      {/* <div>
-        <label htmlFor="status">Status:</label>
+      <div className="mb-4">
+        <label htmlFor="order_date" className="block text-gray-700 font-semibold mb-2">Order Date:</label>
+        <input
+          type="datetime-local"
+          id="order_date"
+          name="order_date"
+          required
+          value={formData.order_date}
+          onChange={handleChange}
+          className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name:</label>
         <input
           type="text"
-          id="status"
-          name="status"
-          value={formData.status}
+          id="name"
+          name="name"
+          required
+          value={formData.name}
           onChange={handleChange}
+          className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
         />
-      </div> */}
+      </div>
+      <div className="mb-4">
+        <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">Phone:</label>
+        <input
+          type="text"
+          id="phone"
+          name="phone"
+          required
+          value={formData.phone}
+          onChange={handleChange}
+          className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="address" className="block text-gray-700 font-semibold mb-2">Address:</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          required
+          value={formData.address}
+          onChange={handleChange}
+          className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+        />
+      </div>
       <input type="hidden" name='user' value={storedUserId} />
       <button type="submit">Submit</button>
     </form>

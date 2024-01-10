@@ -48,9 +48,8 @@ const PizzaDetails = () => {
 
             </main>
             <div>
-      {/* Your page content */}
-      <BackButton /> {/* Use the BackButton component */}
-    </div>
+                <BackButton />
+            </div>
         </div>
     );
 };
