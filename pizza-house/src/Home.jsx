@@ -17,7 +17,8 @@ import ProtectedRoute from './components/ProtectedRoutes';
 import Navbar from "./components/NavBar";
 
 function App() {
-
+console.log(localStorage.getItem('token'));
+console.log(document.cookie.includes('token'));
   return (
     // <div>
       

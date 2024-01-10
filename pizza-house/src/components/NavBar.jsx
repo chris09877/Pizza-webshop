@@ -12,7 +12,7 @@ import { AuthProvider } from './AuthContext'; // Assuming the AuthProvider is av
 import LogoutBtn from './LogoutBtn';
 const Navbar = () => {
   // Check if token exists in cookies or local storage
-  const tokenExists = localStorage.getItem('token') || document.cookie.includes('token');
+  const tokenExists = localStorage.getItem('token');// || document.cookie.includes('token');
 
   return (
     // <div>
@@ -72,7 +72,7 @@ const Navbar = () => {
     </div>
         </>
       )}
-      {!tokenExists && (
+      {tokenExists ===null && (
         <li>
           <NavLink to="/login" className="text-blue-500 hover:text-blue-700">Login</NavLink>
         </li>
