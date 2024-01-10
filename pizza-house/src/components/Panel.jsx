@@ -7,9 +7,13 @@ const Panel = () => {
   const [orderP, setOrderP] = useState([]);
   const [orderD, setOrderD] = useState([]);
   const [orderC, setOrderC] = useState([]);
+  const [user, setUser] = useState([]);
   const navigate = useNavigate();
-  const storedUserId = localStorage.getItem('userId');
+  // const user = localStorage.getItem('userId');
   const navigateToOrderShow = (orderId) => {
+    // order._id = orderId;
+    // console.log(`value of order.user: ${order.user}`);
+    // setUser(order.user);
     Cookies.set("orderId", orderId, { expires: 1/24 }); // 1/24 represents 1 hour
     navigate(`/order/${orderId}`);
   };
@@ -35,18 +39,19 @@ const Panel = () => {
     fetchOrders();
   }, []);
 
-  const handleUpdateStatus = async (storedUserId, newStatus) => {
+  const handleUpdateStatus = async (user, newStatus) => {
     try {
-      await axios.patch(`${config.apiUrl}/orders/checkout/${storedUserId}`, { status: newStatus });
+      console.log(`the user var: ${user}`);
+      await axios.patch(`${config.apiUrl}/orders/checkout/${user}`, { status: newStatus });
       // Handle success, maybe refetch orders or update locally without another fetch
     } catch (error) {
       console.error('Error updating status:', error);
     }
   };
 
-  const handleDeleteOrder = async (storedUserId) => {
+  const handleDeleteOrder = async (user) => {
     try {
-      await axios.delete(`${config.apiUrl}/orders/delete/${storedUserId}`);
+      await axios.delete(`${config.apiUrl}/orders/delete/${user}`);
       // Handle success, maybe refetch orders or update locally without another fetch
     } catch (error) {
       console.error('Error deleting order:', error);
@@ -55,6 +60,7 @@ const Panel = () => {
 
   const renderTable = (orders) => {
     let count = 0;
+    
     return (
       // <table>
       //   <thead>
@@ -76,9 +82,9 @@ const Panel = () => {
       //           <form onSubmit={(e) => {
       //           //   e.preventDefault();
       //             if (order.status === 'pending') {
-      //               handleUpdateStatus(storedUserId, 'confirmed');
+      //               handleUpdateStatus(user, 'confirmed');
       //             } else if (order.status === 'confirmed') {
-      //               handleUpdateStatus(storedUserId, 'delivered');
+      //               handleUpdateStatus(user, 'delivered');
       //             } else if (order.status === 'delivered') {
       //               handleDeleteOrder(order._id);
       //             }
@@ -125,9 +131,9 @@ const Panel = () => {
 //           <form onSubmit={(e) => {
 //             e.preventDefault();
 //             if (order.status === 'pending') {
-//               handleUpdateStatus(storedUserId, 'confirmed');
+//               handleUpdateStatus(user, 'confirmed');
 //             } else if (order.status === 'confirmed') {
-//               handleUpdateStatus(storedUserId, 'delivered');
+//               handleUpdateStatus(user, 'delivered');
 //             } else if (order.status === 'delivered') {
 //               handleDeleteOrder(order._id);
 //             }
@@ -162,13 +168,14 @@ const Panel = () => {
   </thead>
   <tbody className="divide-y divide-gray-200">
     {orders.map((order, index) => (
+    
       <tr
         key={order._id}
-        onClick={() => navigateToOrderShow(order._id)}
+        // onClick={() => navigateToOrderShow(order._id)}
         className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-100 cursor-pointer ${order.category === 'special' ? 'border-2 border-blue-200' : ''}`}
       >
-        <td className="px-6 py-4 whitespace-nowrap">
-          <span className="block text-sm font-medium text-gray-900">
+        <td className="px-6 py-4 whitespace-nowrap" onClick={() => navigateToOrderShow(order._id)}> 
+          <span className="block text-sm font-medium text-gray-900" >
             #{index + 1}
           </span>
           <span className="block text-sm text-gray-500">
@@ -180,11 +187,11 @@ const Panel = () => {
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
           <form onSubmit={(e) => {
-            e.preventDefault();
+            //e.preventDefault();
             if (order.status === 'pending') {
-              handleUpdateStatus(storedUserId, 'confirmed');
+              handleUpdateStatus(order.user, 'confirmed');
             } else if (order.status === 'confirmed') {
-              handleUpdateStatus(storedUserId, 'delivered');
+              handleUpdateStatus(order.user, 'delivered');
             } else if (order.status === 'delivered') {
               handleDeleteOrder(order._id);
             }
@@ -205,7 +212,9 @@ const Panel = () => {
           </form>
         </td>
       </tr>
-    ))}
+    ))
+    
+    }
   </tbody>
 </table>
 
@@ -220,11 +229,13 @@ console.log("delivered: ",orderD);
       <h2 className="text-left font-special text-2xl mt-6">Pending Orders</h2>
       {renderTable(orderP)}
 
+      <h2 className="text-left font-special text-2xl mt-6">Confirmed Orders</h2>
+      {renderTable(orderC)}
+
       <h2 className="text-left font-special text-2xl mt-6">Delivered Orders</h2>
       {renderTable(orderD)}
 
-      <h2 className="text-left font-special text-2xl mt-6">Confirmed Orders</h2>
-      {renderTable(orderC)}
+      
     </div>
   );
 };

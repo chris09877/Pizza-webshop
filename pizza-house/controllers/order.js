@@ -31,6 +31,7 @@ const formUpdateOrder = async (req, res) => {
       // Fetch the order to be updated using the userId
       const order = await Orders.findOne({ user: userId });
         console.log(order);
+        // console.log(`body of params: ${req.body.user}`);
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
@@ -39,8 +40,8 @@ const formUpdateOrder = async (req, res) => {
       order.order_date = req.body.order_date || order.order_date;
       order.phone = req.body.phone || order.phone;
       order.address = req.body.address || order.address;
-      order.status = "pending" ;//|| order.status;
-      order.user = req.body.name;// || order.name;
+      order.status = req.body.status || "pending" ;//|| order.status;
+      order.user = req.body.name|| order.user;
 
       // Save the updated order
       const updatedOrder = await order.save();
