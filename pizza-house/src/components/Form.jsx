@@ -42,6 +42,7 @@ const Form = () => {
       console.log('Order updated:', response.data);
       console.log(`${config.apiUrl}/orders/checkout/${storedUserId}`);
       alert('Order proceed');
+      localStorage.setItem('userId', null);
       window.location.href = '/';
         } catch (error) {
       console.error('Error updating order:', error);

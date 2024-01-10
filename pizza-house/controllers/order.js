@@ -39,7 +39,7 @@ const formUpdateOrder = async (req, res) => {
       order.order_date = req.body.order_date || order.order_date;
       order.phone = req.body.phone || order.phone;
       order.address = req.body.address || order.address;
-      order.status = req.body.status || order.status;
+      order.status = "pending" ;//|| order.status;
       order.name = req.body.name || order.name;
 
       // Save the updated order
