@@ -4,10 +4,8 @@ import Homepng from './assets/pizza-house.png';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Pizzas from './Pizzas';
-import Cart from './Cart';
 import AdminPanel from './AdminPanel';
 import Home from './Home.jsx';
-
 import Login from './Login';
 import PizzaShow from './PizzaShow';
 import ValidateOrder from './ValidateOrder';

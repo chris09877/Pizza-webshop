@@ -4,7 +4,6 @@ import Homepng from './assets/pizza-house.png';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Pizzas from './Pizzas';
-import Cart from './Cart';
 import AdminPanel from './AdminPanel';
 import Home from './Home.jsx';
 import Login from './Login';
@@ -29,7 +28,6 @@ function App() {
             <Route path='/checkout' element={<ValidateOrder />}>Checkout</Route>
 
             <Route element={<ProtectedRoute />}>
-              <Route path='/cart' element={<Cart />}>Cart</Route>
               <Route path='/admin panel' element={<AdminPanel />}>AdminPanel</Route>
               <Route path='/order/:id' element={<OrderShow />} />
             </Route>

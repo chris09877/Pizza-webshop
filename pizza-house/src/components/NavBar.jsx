@@ -3,7 +3,6 @@ import { Routes, Route, NavLink, BrowserRouter } from 'react-router-dom';
 import Pizzas from '../Pizzas';
 import PizzaShow from '../PizzaShow';
 import ValidateOrder from '../ValidateOrder';
-import Cart from '../Cart';
 import AdminPanel from '../AdminPanel';
 import OrderShow from '../OrderShow';
 import Login from '../Login';
