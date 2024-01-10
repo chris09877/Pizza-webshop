@@ -15,6 +15,8 @@ export default function Pizzas() {
 
     // let userId;
     const handleOrderClick = async () => {
+        console.log("inside handle on click");
+        console.log(localStorage.getItem('userId'));
         setShowBtn(!showBtn); // Toggles the showBtn state when the button is clicked
         if (localStorage.getItem('userId') === null) {
             try {
@@ -26,6 +28,8 @@ export default function Pizzas() {
                 console.log(`data id: ${data._id}`);
                 console.log(`user id from data: ${data.user}`);
                 localStorage.setItem('userId', data.user);
+                console.log(`second ${localStorage.getItem('userId')}`);
+
             } catch (error) {
                 console.log(error);
             }
@@ -87,8 +91,8 @@ export default function Pizzas() {
             <div className="flex justify-center items-center">
                 <Navbar />
             </div>
-            <div>
-                <button onClick={handleOrderClick}>ORDER</button>
+            <div className="flex justify-end">
+                <button onClick={handleOrderClick}>START ORDERING</button>
             </div>
             <div>
                 <OrderDetails

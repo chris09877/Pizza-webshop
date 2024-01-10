@@ -122,7 +122,7 @@ const createOrder = async (req, res) => {
             total_price: 0,
             user: userId,
         });
-
+        console.log(`user new user blaze: ${newOrder.user}`);
         await newOrder.save();
         res.status(201).json(newOrder);
     } catch (err) {

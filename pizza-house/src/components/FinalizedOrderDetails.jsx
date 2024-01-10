@@ -97,11 +97,13 @@ const FinalizedOrderDetails = () => {
 
   {order && (
     <div className="mb-6">
-      <p>Total Price: €{order.total_price}</p>
       <p>Order Date: {new Date(order.order_date).toLocaleDateString()}</p>
+      <p>Client Name: {order.user}</p>
       <p>Phone: {order.phone}</p>
       <p>Address: {order.address}</p>
       <p>Status: {order.status}</p>
+      <p>Total Price: €{order.total_price}</p>
+      
     </div>
   )}
 

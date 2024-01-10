@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     console.log(localStorage.getItem('token'));
     setAuthInfo({ token: null, isAuthenticated: false });
+    localStorage.clear();
   };
 
   return (

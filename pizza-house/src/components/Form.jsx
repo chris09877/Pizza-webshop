@@ -42,7 +42,8 @@ const Form = () => {
       console.log('Order updated:', response.data);
       console.log(`${config.apiUrl}/orders/checkout/${storedUserId}`);
       alert('Order proceed');
-      localStorage.setItem('userId', null);
+      //localStorage.setItem('userId', null);
+      localStorage.clear();
       window.location.href = '/';
         } catch (error) {
       console.error('Error updating order:', error);
@@ -125,6 +126,7 @@ const Form = () => {
       type="datetime-local"
       id="order_date"
       name="order_date"
+      required
       value={formData.order_date}
       onChange={handleChange}
       className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
@@ -136,6 +138,7 @@ const Form = () => {
       type="text"
       id="name"
       name="name"
+      required
       value={formData.name}
       onChange={handleChange}
       className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
@@ -147,6 +150,7 @@ const Form = () => {
       type="text"
       id="phone"
       name="phone"
+      required
       value={formData.phone}
       onChange={handleChange}
       className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
@@ -158,6 +162,7 @@ const Form = () => {
       type="text"
       id="address"
       name="address"
+      required
       value={formData.address}
       onChange={handleChange}
       className="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
