@@ -40,7 +40,7 @@ const formUpdateOrder = async (req, res) => {
       order.phone = req.body.phone || order.phone;
       order.address = req.body.address || order.address;
       order.status = "pending" ;//|| order.status;
-      order.name = req.body.name || order.name;
+      order.user = req.body.name;// || order.name;
 
       // Save the updated order
       const updatedOrder = await order.save();
