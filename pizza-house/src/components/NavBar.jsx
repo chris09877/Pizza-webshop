@@ -9,7 +9,7 @@ import OrderShow from '../OrderShow';
 import Login from '../Login';
 import ProtectedRoute from './ProtectedRoutes'; // Import your ProtectedRoute component
 import { AuthProvider } from './AuthContext'; // Assuming the AuthProvider is available
-
+import LogoutBtn from './LogoutBtn';
 const Navbar = () => {
   // Check if token exists in cookies or local storage
   const tokenExists = localStorage.getItem('token') || document.cookie.includes('token');
@@ -67,7 +67,9 @@ const Navbar = () => {
           <li>
             <NavLink to="/admin panel" className="text-blue-500 hover:text-blue-700">Admin Panel</NavLink>
           </li>
-          {/* Add more protected routes as needed */}
+          <div>
+        <LogoutBtn />
+    </div>
         </>
       )}
       {!tokenExists && (
