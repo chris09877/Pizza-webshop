@@ -10,7 +10,7 @@ const getUsers = async (req, res) => {
         if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
             return res.status(401).json({ message: "No authorization token provided" });
         }
-        const token = req.headers.authorization.split("=")[1]; 
+        const token = req.headers.authorization.split("=")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if (!decoded || !decoded) {
@@ -24,6 +24,10 @@ const getUsers = async (req, res) => {
 };
 
 const getUsersById = async (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+    }
     if (!Users.findById(req.id)) {
         return res.status(400).json({ message: "USER NOT FOUND" });
     }
@@ -31,7 +35,7 @@ const getUsersById = async (req, res) => {
         if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
             return res.status(401).json({ message: "No authorization token provided" });
         }
-        const token = req.headers.authorization.split("=")[1]; 
+        const token = req.headers.authorization.split("=")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if (!decoded || !decoded) {
@@ -49,6 +53,10 @@ const getUsersById = async (req, res) => {
 };
 
 const deleteUsers = async (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+    }
     if (!Users.findById(req.id)) {
         return res.status(400).json({ message: "USER NOT FOUND" });
     }
@@ -56,7 +64,7 @@ const deleteUsers = async (req, res) => {
         if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
             return res.status(401).json({ message: "No authorization token provided" });
         }
-        const token = req.headers.authorization.split("=")[1]; 
+        const token = req.headers.authorization.split("=")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if (!decoded || !decoded) {
@@ -86,11 +94,11 @@ const login = async (req, res) => {
         }
 
         // Validate the password
-        if (password !== user.password) { 
+        if (password !== user.password) {
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-    
+
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
         delete user.password;
 

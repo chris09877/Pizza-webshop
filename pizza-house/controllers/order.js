@@ -210,6 +210,9 @@ const getOrderByUserId = async (req, res) => {
         if (!decoded || !decoded) {
             return res.status(403).json({ message: "Unauthorized: Only admins can delete orders" });
         }
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: "Invalid ID format" });
+        }
         const userId = req.params.id;
         console.log(`Searching for user with ID: ${userId}`);
         const userExists = await Users.findOne({ _id: userId });
@@ -247,6 +250,9 @@ const getOrderById = async (req, res) => {
 
         if (!decoded || !decoded) {
             return res.status(403).json({ message: "Unauthorized: Only admins can delete orders" });
+        }
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: "Invalid ID format" });
         }
         const orderId = new mongoose.Types.ObjectId(req.params.id); // Extract the order ID from req.params
         console.log(`Searching for order with ID: ${orderId}`);

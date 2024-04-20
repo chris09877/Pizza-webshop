@@ -11,7 +11,6 @@ app.use(session({
   secret: secretKey, // Secret used to sign the session ID cookie
   resave: false,//
   saveUninitialized: false,
-  // Other configurations like cookie settings, store, etc.
 }));
 
 //cors middleware

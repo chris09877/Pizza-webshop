@@ -1,5 +1,5 @@
 const express = require('express');
-const { deletePizzas, getPizzas, getPizzasById ,createPizza, searchPizza} = require('../controllers/pizza.js');
+const { deletePizzas, getPizzas, getPizzasById, createPizza, searchPizza } = require('../controllers/pizza.js');
 const router = express.Router();
 
 /* READ */

@@ -62,32 +62,32 @@ export default function Pizzas() {
         }
     };
 
-const getPizzasSortedByPriceAsc = async () => {
-    try {
-        const response = await axios.get('http://localhost:3000/pizzas?sort=price_asc');
-        console.log('Sorted by Ascending Price:', response.data);
-    } catch (error) {
-        console.error('Error fetching pizzas sorted by ascending price:', error);
-    }
-};
+    const getPizzasSortedByPriceAsc = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/pizzas?sort=price_asc');
+            console.log('Sorted by Ascending Price:', response.data);
+        } catch (error) {
+            console.error('Error fetching pizzas sorted by ascending price:', error);
+        }
+    };
 
-const getPizzasSortedByPriceDesc = async () => {
-    try {
-        const response = await axios.get('http://localhost:3000/pizzas?sort=price_desc');
-        console.log('Sorted by Descending Price:', response.data);
-    } catch (error) {
-        console.error('Error fetching pizzas sorted by descending price:', error);
-    }
-};
+    const getPizzasSortedByPriceDesc = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/pizzas?sort=price_desc');
+            console.log('Sorted by Descending Price:', response.data);
+        } catch (error) {
+            console.error('Error fetching pizzas sorted by descending price:', error);
+        }
+    };
 
-const getPizzasSortedByName = async () => {
-    try {
-        const response = await axios.get('http://localhost:3000/pizzas?sort=name_asc');
-        console.log('Sorted Alphabetically:', response.data);
-    } catch (error) {
-        console.error('Error fetching pizzas sorted alphabetically:', error);
-    }
-};
+    const getPizzasSortedByName = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/pizzas?sort=name_asc');
+            console.log('Sorted Alphabetically:', response.data);
+        } catch (error) {
+            console.error('Error fetching pizzas sorted alphabetically:', error);
+        }
+    };
 
 
     useEffect(() => {
