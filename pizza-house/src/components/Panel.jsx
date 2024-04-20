@@ -46,9 +46,10 @@ const Panel = () => {
     }
   };
 
-  const handleDeleteOrder = async (user) => {
+  const handleDeleteOrder = async (id) => {
     try {
-      await axios.delete(`${config.apiUrl}/orders/delete/${user}`);
+      await axios.delete(`${config.apiUrl}/orders/delete/${id}`);
+      console.log(id);
       // Handle success, maybe refetch orders or update locally without another fetch
     } catch (error) {
       console.error('Error deleting order:', error);
@@ -94,7 +95,7 @@ const Panel = () => {
                     handleDeleteOrder(order._id);
                   }
                 }}>
-                  <input type="hidden" name="user" value={order.user} />
+                  <input type="hidden" name="user_id" value={order.user} />
                   <button
                     type="submit"
                     className={`px-2 py-1 rounded ${order.status === 'pending'

@@ -62,6 +62,33 @@ export default function Pizzas() {
         }
     };
 
+const getPizzasSortedByPriceAsc = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/pizzas?sort=price_asc');
+        console.log('Sorted by Ascending Price:', response.data);
+    } catch (error) {
+        console.error('Error fetching pizzas sorted by ascending price:', error);
+    }
+};
+
+const getPizzasSortedByPriceDesc = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/pizzas?sort=price_desc');
+        console.log('Sorted by Descending Price:', response.data);
+    } catch (error) {
+        console.error('Error fetching pizzas sorted by descending price:', error);
+    }
+};
+
+const getPizzasSortedByName = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/pizzas?sort=name_asc');
+        console.log('Sorted Alphabetically:', response.data);
+    } catch (error) {
+        console.error('Error fetching pizzas sorted alphabetically:', error);
+    }
+};
+
 
     useEffect(() => {
         const fetchPizzas = async () => {
@@ -69,7 +96,7 @@ export default function Pizzas() {
                 console.log(`${config.apiUrl}/pizzas`);
                 const response = await axios.get(`${config.apiUrl}/pizzas`);
                 const data = response.data;
-
+                console.log(JSON.stringify(data));
                 if (Array.isArray(data)) {
                     setPizzas(data);
                 } else {

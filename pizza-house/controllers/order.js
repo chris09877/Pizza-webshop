@@ -1,7 +1,8 @@
-const { Orders } = require("../models/Models.js");
+const { Orders, Users } = require("../models/Models.js");
 const Cookies = require('js-cookie');
 const mongoose = require('mongoose');
-
+const moment = require('moment');
+const jwt = require('jsonwebtoken');
 
 
 const generateRandomId = () => {
@@ -20,7 +21,25 @@ const cookieUserId = () => {
     }
 };
 
-//
+const validPhone = (phone) => {
+    const pattern = /^\d{10}$/;
+    return pattern.test(phone) ? `+32${phone}` : null;
+};
+
+const validName = (name, res)=>{
+    if (!/^[a-zA-Z\s]*$/.test(name)) {
+        return res.status(400).json({ message: "User field must contain only letters" });
+    }
+};
+const validDate = (order_date, res)=>{
+    if (!moment(order_date, 'YYYY-MM-DD', true).isValid() || moment(order_date).isBefore(moment().format('YYYY-MM-DD'))) {
+        return res.status(400).json({ message: "Invalid or past order date" });
+    }
+
+    else {
+        return order_date;
+    }
+}
 
 const formUpdateOrder = async (req, res) => {
     console.log("form");
@@ -37,11 +56,11 @@ const formUpdateOrder = async (req, res) => {
         }
 
         // Update the order fields based on the form data
-        order.order_date = req.body.order_date || order.order_date;
-        order.phone = req.body.phone || order.phone;
+        order.order_date = validDate(req.body.order_date, res) || order.order_date;
+        order.phone = validPhone(req.body.phone, res) || order.phone;
         order.address = req.body.address || order.address;
         order.status = req.body.status || "pending";//|| order.status;
-        order.user = req.body.name || order.user;
+        order.user = validName(req.body.name, res )|| order.user;
 
         // Save the updated order
         const updatedOrder = await order.save();
@@ -105,47 +124,70 @@ const updateOrder = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 
-}
+};
 
 const createOrder = async (req, res) => {
     try {
-        let userId = cookieUserId();
+        const { order_date, phone, user } = req.body;
+        validDate(order_date,res);
 
+        const formattedPhone = validPhone(phone, res);
+        if (!formattedPhone) {
+            return res.status(400).json({ message: "Invalid phone number format" });
+        }
+        validName(user, res);
 
-        // Construct the Order object
         const newOrder = new Orders({
-            order_date: null,
-            phone: null,
-            address: null,
-            status: null,
-            pizzas: [],
-            total_price: 0,
-            user: userId,
+            ...req.body,
+            phone: formattedPhone,
+            user,
         });
-        console.log(`user new user blaze: ${newOrder.user}`);
         await newOrder.save();
         res.status(201).json(newOrder);
-    } catch (err) {
-        res.status(409).json({ message: err.message });
-    }
-};
-
-
-
-const deleteOrder = async (req, res) => {
-    try {
-        const deletedOrder = await Orders.findByIdAndDelete(req.params.id);
-        if (!deletedOrder) {
-            return res.status(404).json({ message: "Order not found" });
-        }
-        res.status(200).json({ message: "Order deleted successfully" });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 
+const deleteOrder = async (req, res) => {
+    try {
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
+            return res.status(401).json({ message: "No authorization token provided" });
+        }
+        const token = req.headers.authorization.split("=")[1]; // Assuming Bearer token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded) {
+            return res.status(403).json({ message: "Unauthorized: Only admins can delete orders" });
+        }
+
+        const orderId = req.params.id;
+        const order = await Orders.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        await Orders.findByIdAndDelete(orderId);
+        res.status(200).json({ message: "Order deleted successfully" });
+    } catch (err) {
+        
+            console.error("Delete Order Error:", err);
+            res.status(500).json({ message: err.message });
+        
+    }
+};
+
 const getOrders = async (req, res) => {
     try {
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
+            return res.status(401).json({ message: "No authorization token provided" });
+        }
+        const token = req.headers.authorization.split("=")[1]; // Assuming Bearer token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded) {
+            return res.status(403).json({ message: "Unauthorized: Only admins can delete orders" });
+        }
         const ordersData = await Orders.find();
         res.status(200).json(ordersData);
     } catch (err) {
@@ -155,17 +197,31 @@ const getOrders = async (req, res) => {
 
 const getOrderByUserId = async (req, res) => {
     try {
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
+            return res.status(401).json({ message: "No authorization token provided" });
+        }
+        const token = req.headers.authorization.split("=")[1]; // Assuming Bearer token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded) {
+            return res.status(403).json({ message: "Unauthorized: Only admins can delete orders" });
+        }
         const userId = req.params.id;
         console.log(`Searching for user with ID: ${userId}`);
-
+        const userExists = await Users.findOne({ _id: userId });
+        if (!userExists) {
+            return res.status(404).json({ message: "User not found" });
+        } else {
+            console.log("User exists:", userExists);
+        }
         const ordersData = await Orders.findOne({ user: req.params.id });
 
         if (!ordersData) {
-            console.log(`User with ID ${userId} not found in the database.`);
-            return res.status(404).json({ message: "User not found" });
+            console.log(`Order with user ID ${userId} not found in the database.`);
+            return res.status(404).json({ message: "Order not found" });
         }
 
-        console.log(`User with ID ${userId} found:`);
+        console.log(`Order with user ID ${userId} found:`);
         console.log(ordersData);
 
         res.status(200).json(ordersData);
@@ -178,11 +234,16 @@ const getOrderByUserId = async (req, res) => {
 
 const getOrderById = async (req, res) => {
 
-    // let orderId = req.params.id;
-    // const ordersData = await Orders.findOne({ order_id: orderId });
-
-
     try {
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
+            return res.status(401).json({ message: "No authorization token provided" });
+        }
+        const token = req.headers.authorization.split("=")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded) {
+            return res.status(403).json({ message: "Unauthorized: Only admins can delete orders" });
+        }
         const orderId = new mongoose.Types.ObjectId(req.params.id); // Extract the order ID from req.params
         console.log(`Searching for order with ID: ${orderId}`);
 

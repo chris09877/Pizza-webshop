@@ -2,9 +2,20 @@ const { Users } = require("../models/Models.js");
 const jwt = require("jsonwebtoken");
 
 
-
 const getUsers = async (req, res) => {
+    if (!Users.findById(req.id)) {
+        return res.status(400).json({ message: "USER NOT FOUND" });
+    }
     try {
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
+            return res.status(401).json({ message: "No authorization token provided" });
+        }
+        const token = req.headers.authorization.split("=")[1]; 
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded) {
+            return res.status(403).json({ message: "Unauthorized: Only admins can delete pizzas" });
+        }
         const usersData = await Users.find();
         res.status(200).json(usersData);
     } catch (err) {
@@ -13,7 +24,20 @@ const getUsers = async (req, res) => {
 };
 
 const getUsersById = async (req, res) => {
+    if (!Users.findById(req.id)) {
+        return res.status(400).json({ message: "USER NOT FOUND" });
+    }
     try {
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
+            return res.status(401).json({ message: "No authorization token provided" });
+        }
+        const token = req.headers.authorization.split("=")[1]; 
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded) {
+            return res.status(403).json({ message: "Unauthorized: Only admins can delete pizzas" });
+        }
+
         const userData = await Users.findById(req.params.id);
         if (!userData) {
             return res.status(404).json({ message: "User not found" });
@@ -25,7 +49,20 @@ const getUsersById = async (req, res) => {
 };
 
 const deleteUsers = async (req, res) => {
+    if (!Users.findById(req.id)) {
+        return res.status(400).json({ message: "USER NOT FOUND" });
+    }
     try {
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer=')) {
+            return res.status(401).json({ message: "No authorization token provided" });
+        }
+        const token = req.headers.authorization.split("=")[1]; 
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded) {
+            return res.status(403).json({ message: "Unauthorized: Only admins can delete pizzas" });
+        }
+
         const deletedUser = await Users.findByIdAndDelete(req.params.id);
         if (!deletedUser) {
             return res.status(404).json({ message: "User not found" });
@@ -49,15 +86,13 @@ const login = async (req, res) => {
         }
 
         // Validate the password
-        if (password !== user.password) { // Replace 'user.password' with your actual hashed password comparison logic
+        if (password !== user.password) { 
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-        // At this point, the username and password are valid
-        // Generate and return a token for the authenticated user (JWT, session token, etc.)
+    
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
         delete user.password;
-        //   setAuthInfo({ token: 'dummyToken', isAuthenticated: true });
 
         console.log(token);
 

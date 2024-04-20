@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const {PizzaMOdel} = require('./Pizzas');
 const OrdersSchema = new mongoose.Schema({
     id: mongoose.Schema.Types.ObjectId,
     user: {

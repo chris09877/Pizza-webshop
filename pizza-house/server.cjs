@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-
 const express = require("express");
 const mongoose = require('mongoose');
 const cors = require('cors'); //for request to db  to send request to db
@@ -17,7 +16,7 @@ app.use(session({
 
 //cors middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'http://localhost:5174',
   credentials: false,
 }));
 
@@ -35,21 +34,6 @@ app.use('/users', UserRoutes);
 app.use('/pizzas', PizzasRoutes);
 app.use('/orders', OrdersRoutes);
 app.use('/carts', OrderDetailsRoutes);
-
-
-// Generate a 32-byte (256-bit) random string for session key
-// const crypto = require('crypto');
-// const secretKey = crypto.randomBytes(32).toString('hex'); 
-// console.log(secretKey);
-
-// Generate a 32-byte (256-bit) random string for JWT KEY
-// const crypto = require('crypto');
-// // Generate a random buffer
-// const randomBytes = crypto.randomBytes(32);
-// // Convert buffer to a hexadecimal string
-// const secretKey2 = randomBytes.toString('hex');
-// console.log(secretKey2); // This is your generated secret key
-
 
 const PORT = process.env.PORT || 3001;
 //connection to mongoDB
