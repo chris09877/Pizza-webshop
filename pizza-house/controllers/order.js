@@ -42,7 +42,9 @@ const validDate = (order_date, res)=>{
 }
 
 const formUpdateOrder = async (req, res) => {
-    console.log("form");
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+    }
     try {
         console.log(req.params.id);
         const userId = req.params.id;
@@ -160,7 +162,9 @@ const deleteOrder = async (req, res) => {
         if (!decoded || !decoded) {
             return res.status(403).json({ message: "Unauthorized: Only admins can delete orders" });
         }
-
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: "Invalid ID format" });
+        }
         const orderId = req.params.id;
         const order = await Orders.findById(orderId);
         if (!order) {

@@ -32,7 +32,10 @@ const getPizzas = async (req, res) => {
 };
 
 const getPizzasById = async (req, res) => {
-    console.log("test");
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+    }
+    
     try {
         const pizzaId = new mongoose.Types.ObjectId(req.params.id); // Convert string ID to ObjectId
         const pizzasData = await PizzasModel.findById(pizzaId);
@@ -48,6 +51,10 @@ const getPizzasById = async (req, res) => {
 
 
 const deletePizzas = async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+    }
+    
     if (!Users.findById(req.id)) 
     {
         return res.status(400).json({ message: "USER NOT FOUND" });
@@ -105,11 +112,29 @@ const createPizza = async (req, res) => {
     }
 };
 
-
+const searchPizza = async(req, res) =>{
+    const searchText = req.query.search; // search text comes in query string as ?search=
+    if (searchText === null || searchText === undefined || !searchText) {
+        return res.status(400).json({ message: "INVALID SEARCH QUERY" });
+    }
+    try {
+        const searchResult = await PizzasModel.find({
+            $text: { $search: searchText }
+        }, {
+            score: { $meta: "textScore" }
+        }).sort({
+            score: { $meta: "textScore" }
+        });
+        res.status(200).json(searchResult);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
 
 module.exports = {
     getPizzas,
     getPizzasById,
     deletePizzas,
     createPizza,
+    searchPizza,
 };

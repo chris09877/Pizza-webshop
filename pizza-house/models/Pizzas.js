@@ -4,6 +4,7 @@ const PizzasSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        index: true,
       },
     description:{
         type: String,
@@ -18,5 +19,6 @@ const PizzasSchema = new mongoose.Schema({
         required: true,
       },
 });
+PizzasSchema.index({name: "text"})
 const PizzasModel = mongoose.model("pizzas", PizzasSchema);
 module.exports = {PizzasModel};
