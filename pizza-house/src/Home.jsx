@@ -24,7 +24,7 @@ function App() {
 
       <div className="flex-grow flex items-center justify-center">
         <img
-          src="../public/pizza-house.png"
+          src="../pizza-house.png"
           alt="pizza-house home"
           className="rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
         />
