@@ -118,14 +118,14 @@ const searchPizza = async(req, res) =>{
         return res.status(400).json({ message: "INVALID SEARCH QUERY" });
     }
     try {
-        const searchResult = await PizzasModel.find({
-            $text: { $search: searchText }
-        }, {
-            score: { $meta: "textScore" }
-        }).sort({
-            score: { $meta: "textScore" }
-        });
-        res.status(200).json(searchResult);
+        const regex = new RegExp("^" + searchText, "i"); // Creates a regex to match strings starting with `searchText`, case insensitive
+        const searchResult = await PizzasModel.find({ name: regex });
+    
+        if (searchResult.length === 0) {
+            res.status(404).json({ message: "No pizzas found starting with the provided letters." });
+        } else {
+            res.status(200).json(searchResult);
+        }
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
