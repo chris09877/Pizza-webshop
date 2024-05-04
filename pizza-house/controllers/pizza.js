@@ -28,11 +28,9 @@ const getPizzas = async (req, res) => {
 
     try {
         const pizzasData = await PizzasModel.find({}).sort(sortOptions).skip(skip).limit(limit);
-        const totalPizzas = await PizzasModel.countDocuments({});  // Total number of pizzas for pagination info
-        console.log(req.query); // Add this line to log the query parameters
-
+        const totalPizzas = await PizzasModel.countDocuments({}); 
         res.status(200).json({
-            totalPages: Math.ceil(totalPizzas / limit),  // Total number of pages
+            totalPages: Math.ceil(totalPizzas / limit),  
             currentPage: page,
             pizzas: pizzasData
         });

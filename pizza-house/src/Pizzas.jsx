@@ -7,7 +7,7 @@ import SubmitBtn from './components/SubmitBtn';
 import Cookies from "js-cookie";
 import OrderDetails from './components/OrderDetails';
 import Navbar from "./components/NavBar";
-import Pagination from './components/Pagination'; 
+import Pagination from './components/Pagination';
 
 export default function Pizzas() {
     const [pizzas, setPizzas] = useState([]);
@@ -54,12 +54,6 @@ export default function Pizzas() {
             console.log(`${config.apiUrl}/orders/update/${localStorage.getItem('userId')}`);
             const response = await axios.patch(`${config.apiUrl}/orders/update/${localStorage.getItem('userId')}`, data);
 
-            //console.log(response.data); // Handle the response here (success message or other actions)
-
-            //   setOrderDetails(await response.data);
-            //   console.log(` data send to component: ${orderDetails}`);
-
-
         } catch (error) {
             console.error('Error:', error); // Handle errors here
         }
@@ -95,20 +89,7 @@ export default function Pizzas() {
 
     useEffect(() => {
         const fetchPizzas = async () => {
-            // try {
-            //     console.log(`${config.apiUrl}/pizzas`);
-            //     const response = await axios.get(`${config.apiUrl}/pizzas`);
-            //     const data = response.data;
-            //     console.log(JSON.stringify(data));
-            //     if (Array.isArray(data)) {
-            //         setPizzas(data);
-            //     } else {
-            //         console.log('Error: pizzas is not an array');
-            //         console.log(data);
-            //     }
-            // } catch (error) {
-            //     console.log(error);
-            // }
+
             try {
                 const response = await axios.get(`${config.apiUrl}/pizzas?page=${currentPage}&limit=8`);
                 setPizzas(response.data.pizzas);
@@ -173,7 +154,7 @@ export default function Pizzas() {
                             </div>
                         </form>
                     ))}
-                                <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
                 </div>
 
