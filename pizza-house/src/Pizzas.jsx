@@ -7,12 +7,15 @@ import SubmitBtn from './components/SubmitBtn';
 import Cookies from "js-cookie";
 import OrderDetails from './components/OrderDetails';
 import Navbar from "./components/NavBar";
+import Pagination from './components/Pagination'; 
+
 export default function Pizzas() {
     const [pizzas, setPizzas] = useState([]);
     const [showBtn, setShowBtn] = useState(true);
     const [userId, setUserId] = useState([]);
     const [orderDetails, setOrderDetails] = useState([]);
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
     const handleOrderClick = async () => {
         console.log("inside handle on click");
@@ -92,24 +95,31 @@ export default function Pizzas() {
 
     useEffect(() => {
         const fetchPizzas = async () => {
+            // try {
+            //     console.log(`${config.apiUrl}/pizzas`);
+            //     const response = await axios.get(`${config.apiUrl}/pizzas`);
+            //     const data = response.data;
+            //     console.log(JSON.stringify(data));
+            //     if (Array.isArray(data)) {
+            //         setPizzas(data);
+            //     } else {
+            //         console.log('Error: pizzas is not an array');
+            //         console.log(data);
+            //     }
+            // } catch (error) {
+            //     console.log(error);
+            // }
             try {
-                console.log(`${config.apiUrl}/pizzas`);
-                const response = await axios.get(`${config.apiUrl}/pizzas`);
-                const data = response.data;
-                console.log(JSON.stringify(data));
-                if (Array.isArray(data)) {
-                    setPizzas(data);
-                } else {
-                    console.log('Error: pizzas is not an array');
-                    console.log(data);
-                }
+                const response = await axios.get(`${config.apiUrl}/pizzas?page=${currentPage}&limit=8`);
+                setPizzas(response.data.pizzas);
+                setTotalPages(response.data.totalPages);
             } catch (error) {
-                console.log(error);
+                console.error('Failed to fetch pizzas:', error);
             }
         };
 
         fetchPizzas();
-    }, []);
+    }, [currentPage]);
 
     return (
 
@@ -163,6 +173,8 @@ export default function Pizzas() {
                             </div>
                         </form>
                     ))}
+                                <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
                 </div>
 
             }

@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const getPizzas = async (req, res) => {
     const sortQuery = req.query.sort;
     const page = parseInt(req.query.page) || 1;  
-    const limit = parseInt(req.query.limit) || 10;  
+    const limit = parseInt(req.query.limit) || 5;  
     const skip = (page - 1) * limit;  
 
     let sortOptions = {};
@@ -29,6 +29,8 @@ const getPizzas = async (req, res) => {
     try {
         const pizzasData = await PizzasModel.find({}).sort(sortOptions).skip(skip).limit(limit);
         const totalPizzas = await PizzasModel.countDocuments({});  // Total number of pizzas for pagination info
+        console.log(req.query); // Add this line to log the query parameters
+
         res.status(200).json({
             totalPages: Math.ceil(totalPizzas / limit),  // Total number of pages
             currentPage: page,
