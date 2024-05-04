@@ -5,8 +5,11 @@ const jwt = require('jsonwebtoken');
 
 
 const getPizzas = async (req, res) => {
-
     const sortQuery = req.query.sort;
+    const page = parseInt(req.query.page) || 1;  
+    const limit = parseInt(req.query.limit) || 10;  
+    const skip = (page - 1) * limit;  
+
     let sortOptions = {};
 
     if (sortQuery) {
@@ -17,19 +20,25 @@ const getPizzas = async (req, res) => {
             case 'price_desc':
                 sortOptions = { price: -1 };
                 break;
-            case '':
+            default:
                 sortOptions = { name: 1 };
                 break;
         }
     }
 
     try {
-        const pizzasData = await PizzasModel.find({}).sort(sortOptions);
-        res.status(200).json(pizzasData);
+        const pizzasData = await PizzasModel.find({}).sort(sortOptions).skip(skip).limit(limit);
+        const totalPizzas = await PizzasModel.countDocuments({});  // Total number of pizzas for pagination info
+        res.status(200).json({
+            totalPages: Math.ceil(totalPizzas / limit),  // Total number of pages
+            currentPage: page,
+            pizzas: pizzasData
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
 
 const getPizzasById = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
