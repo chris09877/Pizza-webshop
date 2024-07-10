@@ -8,4 +8,4 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 # My Pizza App
 
-Welcome to my awesome pizza App repository! Check it out [here](https://github.com/chris09877/project2).
+Welcome to my awesome pizza App repository! Check it out [here](https://github.com/chris09877/Pizza-webshop).
