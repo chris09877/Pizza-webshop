@@ -51,10 +51,7 @@ export default function Pizzas() {
             console.log(`${config.apiUrl}/orders/update/${localStorage.getItem('userId')}`);
             const response = await axios.patch(`${config.apiUrl}/orders/update/${localStorage.getItem('userId')}`, data);
 
-            //console.log(response.data); // Handle the response here (success message or other actions)
-
-            //   setOrderDetails(await response.data);
-            //   console.log(` data send to component: ${orderDetails}`);
+            
 
 
         } catch (error) {

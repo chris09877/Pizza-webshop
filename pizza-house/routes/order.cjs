@@ -2,7 +2,6 @@ const express = require('express');
 
 const { createOrder, getOrders, getOrderById, updateOrder, deleteOrder, formUpdateOrder, getOrderByUserId } = require('../controllers/order.js');
 
-// const { verifyToken } = require("../middleware/auth.js");
 
 const router = express.Router();
 console.log("route order ok");
